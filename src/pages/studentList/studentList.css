@@ -1,0 +1,41 @@
+.filterBox {
+  margin: 50px 100px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.filterContainer {
+  flex: 1.5;
+  display: flex;
+  align-items: center;
+}
+
+.filterItem {
+  margin-left: 15px;
+}
+
+select {
+  padding: 10px;
+  margin-right: 20px;
+  border: 1px solid rgb(90, 180, 220);
+  border-radius: 5px;
+}
+
+.searchContainer {
+  flex: 1;
+}
+
+.inputBox {
+  padding: 10px;
+  border: 1px solid rgb(90, 180, 220);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+input {
+  width: 100%;
+  border: none;
+  outline: none;
+}

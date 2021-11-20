@@ -1,0 +1,94 @@
+.student {
+  width: 300px;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  border: 0.5px solid rgb(90, 180, 220);
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+}
+
+.profileImg {
+  height: 70px;
+  width: 70px;
+  border-radius: inherit;
+  object-fit: cover;
+}
+
+.info {
+  margin-top: 15px;
+}
+
+.job {
+  font-size: 14px;
+}
+
+.course p {
+  margin-top: 10px;
+  margin-right: 4px;
+  font-size: 10px;
+}
+
+.studentPop {
+  position: absolute;
+  height: 60vh;
+  width: 60vw;
+  border: 1px solid rgb(90, 180, 220);
+  border-radius: 10px;
+  background-color: #fff;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+}
+
+.close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.top {
+  display: flex;
+  flex: 1;
+  background-color: rgb(90, 180, 220);
+  border-radius: 10px;
+}
+
+.topImg {
+  height: 150px;
+  width: 150px;
+  margin: 20px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.topInfo {
+  margin: 20px;
+}
+.bottom {
+  display: flex;
+  flex: 1.4;
+  margin: 20px;
+  background-color: #fff;
+}
+
+.bottomLeft {
+  flex: 2.6;
+  margin-right: 20px;
+}
+
+.bottomRight {
+  flex: 1;
+}
+
+.bottomRightTitle {
+  font-size: 16px;
+  font-weight: 600;
+}
