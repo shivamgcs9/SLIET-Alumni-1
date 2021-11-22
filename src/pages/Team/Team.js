@@ -1,12 +1,12 @@
 import React from "react";
-import Navbar from "../../components/navbar/Navbar";
-import Students from "../../components/students/Students";
-import "./studentList.css";
+// import Navbar from "../../components/navbar/Navbar";
+import Student from '../../components/Team/student/Student';
+import "./Team.css";
 
-const StudentList = () => {
+const Team = () => {
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="filterBox">
         <div className="filterContainer">
           <div className="filterItem bold">Filters</div>
@@ -56,9 +56,9 @@ const StudentList = () => {
           </div>
         </div>
       </div>
-      <Students />
+      <Student />
     </div>
   );
 };
 
-export default StudentList;
+export default Team;
