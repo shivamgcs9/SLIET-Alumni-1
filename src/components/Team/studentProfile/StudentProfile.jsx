@@ -30,13 +30,13 @@ const Container = styled.div`
   } */
 `;
 const ImgContainer = styled.div`
-  flex: 3;
-  padding: 50px 0;
+  flex: 1;
+  padding-top: 30px;
   overflow: hidden;
 `;
 const Image = styled.img`
-  height: 100%;
-  width: 100%;
+  width: 250px;
+  height: 250px;
   object-fit: cover;
   border-radius: 50%;
   box-shadow: 0px 10px 13px -7px blue;
@@ -66,11 +66,11 @@ const Socials = styled.div`
 `;
 
 const SocialIcons = styled.span`
-  margin-left: 15px;
+  margin: 0 15px;
 
   &:hover {
     color: blue;
-    transform: scale(1.3);
+    transform: scale(1.5);
   }
 `;
 const Designation = styled.p``;
