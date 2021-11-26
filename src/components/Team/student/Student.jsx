@@ -1,69 +1,122 @@
-import React, { useState } from "react";
+import { FaDribbble, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-import "./student.css";
+const Socials = styled.div`
+  opacity: 0;
+
+  display: flex;
+  transition: all 0.5s ease;
+`;
+const Batch = styled.p`
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  right: -30px;
+  padding: 2px 5px;
+  border-bottom: 5px solid blue;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 2;
+  transition: all 0.5s ease;
+`;
+const Container = styled.div`
+  margin: 15px;
+  min-width: 350px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5fbfb;
+  position: relative;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  box-shadow: 0px 10px 13px -7px #000000;
+  position: relative;
+  transition: all 1s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:hover ${Socials} {
+    opacity: 1;
+  }
+
+  &:hover ${Batch} {
+    opacity: 1;
+    right: 0;
+  }
+`;
+
+const Profile = styled.img`
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0px 5px 13px -7px blue;
+  padding: 5px;
+`;
+const Info = styled.div`
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 20px;
+`;
+
+const Name = styled.h5``;
+
+const Profession = styled.p``;
+
+const SocialIcons = styled.span`
+  margin-left: 5px;
+
+  &:hover {
+    color: blue;
+    transform: scale(1.1);
+  }
+`;
+const linkStyle = {
+  textDecoration: "none",
+  color: "inherit",
+};
 
 const Student = () => {
-  const [open, setOpen] = useState(true);
-
-  const handleClick = () => {
-    setOpen(false);
-  };
-
-  const handleClose = () => {
-    setOpen(true);
-  };
   return (
-    <>
-      {open ? (
-        <div>
-          <div className="student" onClick={handleClick}>
-            <img
-              src="https://images.pexels.com/photos/2811089/pexels-photo-2811089.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-              alt=""
-              className="profileImg"
-            />
-            <div className="info">
-              <h3 className="name">alisha</h3>
-              <p className="job">Developer at Sliet Alumini</p>
-            </div>
-            <div className="course">
-              <p>B.E 2022</p>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div className="studentPop">
-          <button className="close" onClick={handleClose}>
-            close
-          </button>
-          <div className="top">
-            <img
-              className="topImg"
-              src="https://images.pexels.com/photos/2613260/pexels-photo-2613260.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-              alt=""
-            />
-            <div className="topInfo">
-              <h1>Alisha</h1>
-              <p>Developer at Sliet Alumini</p>
-              <p>B.E 2022</p>
-            </div>
-          </div>
-          <div className="bottom">
-            <div className="bottomLeft">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Doloremque enim quaerat autem odit voluptatibus officia maiores
-              quibusdam, beatae necessitatibus id
-            </div>
-            <div className="bottomRight">
-              <div className="bottomRightTitle">Social Links</div>
-              <div>social link 1</div>
-              <div>social link 2</div>
-              <div>social link 3</div>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
+    <Link to="/profile" style={linkStyle}>
+      <Container>
+        <Profile
+          src="https://cdn.myanimelist.net/images/characters/6/278736.jpg"
+          alt=""
+        />
+
+        <Info>
+          <Profession>Web Developer</Profession>
+          <Name>Hinata Hyuga</Name>
+          <Socials>
+            <SocialIcons>
+              <Link to="/blog" style={linkStyle}>
+                <FaFacebook />
+              </Link>
+            </SocialIcons>
+            <SocialIcons>
+              <FaInstagram />
+            </SocialIcons>
+            <SocialIcons>
+              <FaDribbble />
+            </SocialIcons>
+            <SocialIcons>
+              <FaTwitter />
+            </SocialIcons>
+          </Socials>
+        </Info>
+
+        <Batch>2018-22</Batch>
+      </Container>
+    </Link>
   );
 };
 
