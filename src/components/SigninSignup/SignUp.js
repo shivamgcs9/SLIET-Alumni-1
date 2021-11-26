@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Link } from "react-router-dom";
+import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
+import { signupme } from '../../auth/helper';
 
-import {BsFillEyeFill  , BsFillEyeSlashFill} from "react-icons/bs";
+
+
 
 const SignUp = () => {
     const [values, setValues] = useState({
@@ -19,10 +23,10 @@ const SignUp = () => {
         // console.log(values);
     };
 
-    const [showPass , setShowPass] = useState(false);
+    const [showPass, setShowPass] = useState(false);
 
     const handlePasswordToogle = (e) => {
-        const vl =  showPass ? false : true;
+        const vl = showPass ? false : true;
         setShowPass(vl);
     };
 
@@ -30,17 +34,79 @@ const SignUp = () => {
         e.preventDefault();
         setValues({ ...values, error: false });
 
+        signupme({ name, email, password })
+            .then((data) => {
+                // console.log(data);
+                if (data.error) {
+                    setValues({
+                        ...values,
+                        error: data.error,
+                        success: false,
+                    });
+                } else {
+                    setValues({
+                        ...values,
+                        name: "",
+                        email: "",
+                        error: "",
+                        password: "",
+                        success: true,
+                    });
+                }
 
+            })
+            .catch(
+                // console.log("Error in signup")
+                (err) => {
+                    setValues({
+                        ...values,
+                        error: err,
+                        success: false,
+                    })
+                }
+
+
+            );
+    };
+    const successMessage = () => {
+        return (
+            success && (<div className="row">
+                <div
+                    className="alert alert-success "
+                    style={{ display: success ? "" : "none" }}
+                >
+                    New Account was created successfully!!. <br />A verification link has been sent to your registered email. Come back and {" "}
+                    <Link to="/signin">Login Here</Link>
+                </div>
+
+            </div>)
+        );
+    };
+    const errorMessage = () => {
+        return (
+            error && (<div className="row">
+                <div
+                    className="alert alert-danger"
+                    style={{ display: error ? "" : "none" }}
+                >
+                    {error}
+                </div>
+
+            </div>)
+        );
     };
 
     return (
         <Container>
+
             <form
                 id="signup"
                 className="input-group"
             >
                 <div className="LSbox ">
                     <div className="mb-3">
+                        {successMessage()}
+                        {errorMessage()}
                         <label htmlFor="name" className="form-label lsLabel">
                             Name
                         </label>
@@ -88,7 +154,7 @@ const SignUp = () => {
                             <button type="button" className="btn border-bottom bg-secondary bg-gradient text-white" onClick={(e) => {
                                 handlePasswordToogle(e);
                             }}>
-                                {showPass ? <BsFillEyeSlashFill / > : <BsFillEyeFill /> }
+                                {showPass ? <BsFillEyeSlashFill /> : <BsFillEyeFill />}
                             </button>
                         </div>
                     </div>

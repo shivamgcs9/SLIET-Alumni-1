@@ -5,7 +5,7 @@ import "./LoginSignUp.css";
 import Login from './Login';
 
 const LoginSignUp = () => {
-    const [isLogged , setIsLogged] = useState(false);
+    const [isLogged , setIsLogged] = useState(true);
     return (
         <Container>
             <DoubleContainer>

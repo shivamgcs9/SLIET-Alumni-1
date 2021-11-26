@@ -141,17 +141,17 @@ const Login = () => {
                         className="d-flex justify-content-between"
                         id="groupRememberForget"
                     >
-                        {/* <div className="mb-3">
+                        <div className="mb-3">
                             <label htmlFor="userEmail" className="form-label lsLabel">
                                 <Link to="/ForgetPassword"
 
                                     rel="noreferrer"
-                                    className="text-white"
+                                    className="text-dark"
                                 >
                                     Forget Password ?
                                 </Link>
                             </label>
-                        </div> */}
+                        </div>
                     </div>
 
                     <input
