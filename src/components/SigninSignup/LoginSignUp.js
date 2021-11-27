@@ -1,26 +1,26 @@
-import React , {useState} from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import SignUp from './SignUp';
 import "./LoginSignUp.css";
 import Login from './Login';
 
-const LoginSignUp = () => {
-    const [isLogged , setIsLogged] = useState(true);
+const LoginSignUp = ({ isLogin }) => {
+    const [isLogged, setIsLogged] = useState(isLogin);
     return (
         <Container>
             <DoubleContainer>
-                    <LeftBox>
-                        SLIET Alumini Portal
-                    </LeftBox>
-                    <RightBox>
-                        <h3>Join the Alumini Portal</h3>
-                        {isLogged ? <><p>Already have an account <span onClick={(e)=>{
-                            
-                            setIsLogged(false);
-                        }}>Sign In</span></p> <SignUp /></> : <><p>Create a new account <span onClick = {(e)=>{setIsLogged(true)}}>Sign Up</span></p><Login /></> }
-                    </RightBox>
+                <LeftBox>
+                    SLIET Alumini Portal
+                </LeftBox>
+                <RightBox>
+                    <h3>Join the Alumini Portal</h3>
+                    {isLogged ? <><p>Create a new account <span onClick={(e) => { setIsLogged(false) }}>Sign Up</span></p><Login /></> : <><p>Already have an account <span onClick={(e) => {
+
+                        setIsLogged(true);
+                    }}>Sign In</span></p> <SignUp /></>}
+                </RightBox>
             </DoubleContainer>
-            
+
         </Container>
     )
 }

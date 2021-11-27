@@ -4,7 +4,7 @@ import LoginSignUp from '../../components/SigninSignup/LoginSignUp';
 function Register() {
     return (
         <div>
-            <LoginSignUp />
+            <LoginSignUp isLogin = {false} />
         </div>
     )
 }

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link, Redirect } from "react-router-dom";
-import {BsFillEyeFill  , BsFillEyeSlashFill} from "react-icons/bs";
+import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
+import { signin, authenticate, isAuthenticated } from "../../auth/helper";
 
 const Login = () => {
     const [values, setValues] = useState({
@@ -12,13 +13,7 @@ const Login = () => {
         loading: false,
     });
 
-
-
     const { email, password, loading, didRedirect, error } = values;
-
-    const isAuthenticated = () => {
-        return 1;
-    }
 
     const { user } = isAuthenticated();
 
@@ -37,39 +32,38 @@ const Login = () => {
                 return <Redirect to="/user/dashboard" />;
             }
         }
-
-        // if (isAuthenticated()) {
-        //   return <Redirect to="/" />;
-        // }
+        if (isAuthenticated()) {
+          return <Redirect to="/" />;
+        }
     };
     const onSubmit = (event) => {
         event.preventDefault();
 
         setValues({ ...values, error: false, loading: true });
 
-        // signin({ email, password })
-        //   .then((data) => {
-        //     if (data.error) {
-        //       setValues({ ...values, error: data.error, loading: false });
-        //     } else {
-        //       authenticate(data, () => {
-        //         setValues({
-        //           ...values,
-        //           email: "",
-        //           password: "",
-        //           error: "",
-        //           didRedirect: true,
-        //         });
-        //       });
-        //     }
-        //   })
-        //   .catch("Some error Ocuured");
+        signin({ email, password })
+          .then((data) => {
+            if (data.error) {
+              setValues({ ...values, error: data.error, loading: false });
+            } else {
+              authenticate(data, () => {
+                setValues({
+                  ...values,
+                  email: "",
+                  password: "",
+                  error: "",
+                  didRedirect: true,
+                });
+              });
+            }
+          })
+          .catch("Some error Ocuured");
     };
     const loadingMessage = () => {
         return (
             loading && (
                 <div className=" text-center my-2">
-                    <div className="spinner-border text-light " role="status">
+                    <div className="spinner-border text-primary " role="status">
                         <span className="visually-hidden">Loading...</span>
                     </div>
                 </div>
@@ -79,27 +73,29 @@ const Login = () => {
     const errorMessage = () => {
         return (
             error && (<div className="row">
-                <div className="offset-sm-3 col-md-6 text-left">
-                    <div
-                        className="alert alert-danger"
-                        style={{ display: error ? "" : "none" }}
-                    >
-                        {error}
-                    </div>
+                <div
+                    className="alert alert-danger"
+                    style={{ display: error ? "" : "none" }}
+                >
+                    {error}
                 </div>
+
             </div>)
         );
     };
-    const [showPass , setShowPass] = useState(false);
+    const [showPass, setShowPass] = useState(false);
 
     const handlePasswordToogle = (e) => {
-        const vl =  showPass ? false : true;
+        const vl = showPass ? false : true;
         setShowPass(vl);
     };
     return (
         <Container>
             <form id="login" className="input-group">
                 <div className="LSbox mt-2">
+                    {loadingMessage()}
+                    {errorMessage()}
+
                     <div className="mb-3">
                         <label htmlFor="userEmail" className="form-label lsLabel">
                             Email address
@@ -121,7 +117,7 @@ const Login = () => {
                         </label>
                         <div className="input-group mb-3">
                             <input
-                                type={showPass ? "text" : "password"} 
+                                type={showPass ? "text" : "password"}
                                 className="form-control LSinputField"
                                 id="userPassword"
                                 placeholder="password"
@@ -133,7 +129,7 @@ const Login = () => {
                             <button type="button" className="btn border-bottom bg-secondary bg-gradient text-white" onClick={(e) => {
                                 handlePasswordToogle(e);
                             }}>
-                                {showPass ? <BsFillEyeSlashFill / > : <BsFillEyeFill /> }
+                                {showPass ? <BsFillEyeSlashFill /> : <BsFillEyeFill />}
                             </button>
                         </div>
                     </div>
@@ -162,6 +158,7 @@ const Login = () => {
                     />
                 </div>
             </form>
+            {performRedirect()}
         </Container>
     )
 }
