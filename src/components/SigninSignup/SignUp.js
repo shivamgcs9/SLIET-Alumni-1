@@ -56,14 +56,14 @@ const SignUp = () => {
 
             })
             .catch(
-                // console.log("Error in signup")
-                (err) => {
-                    setValues({
-                        ...values,
-                        error: err,
-                        success: false,
-                    })
-                }
+                console.log("Error in signup")
+                // (err) => {
+                //     setValues({
+                //         ...values,
+                //         error: err,
+                //         success: false,
+                //     })
+                // }
 
 
             );
