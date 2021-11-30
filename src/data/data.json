@@ -1,0 +1,184 @@
+{
+  "Header": {
+    "title": "Welcome SLIET ALUMNI ",
+    "paragraph": "Any institutions' alumni are key to its growth. We are focused on giving a global experience to our students."
+  },
+  "About": {
+    "paragraph": "We focus on faculty, as opposed to facilities, budgets, endowments or students. We do so because We believe, based on many decades of work as a teacher, a scholar and an administrator, that the quality of the faculty determines the quality of the university. Everything else flows from the quality of the faculty. If the faculty are good, you will attract good students and you will have alumni who will raise funds for you.",
+    "Why": [
+      "SLIET has a lively alumni association",
+      "We truly believe SLIET experience",
+      "SLIET alumni contribute time",
+      "The SLIET aims to learning."
+    ],
+    "Why2": [
+      "Aliquip ex ea commodo",
+      "Lorem ipsum dolor",
+      "Exercitation ullamco",
+      "Lorem ipsum dolor"
+    ]
+  },
+  "Gallery": [
+    {
+      "title": "College Campus",
+      "largeImage": "img/portfolio/11-gallery.jpg",
+      "smallImage": "img/portfolio/11-gallery.jpg"
+    },
+    {
+      "title": "Clubs",
+      "largeImage": "img/portfolio/03-gallery.jpg",
+      "smallImage": "img/portfolio/03-gallery.jpg"
+    },
+    {
+      "title": "Madhuram",
+      "largeImage": "img/portfolio/08-gallery.jpg",
+      "smallImage": "img/portfolio/08-gallery.jpg"
+    },
+    {
+      "title": "College Library",
+      "largeImage": "img/portfolio/05-gallery.jpg",
+      "smallImage": "img/portfolio/05-gallery.jpg"
+    },
+    {
+      "title": "Academics",
+      "largeImage": "img/portfolio/06-gallery.jpg",
+      "smallImage": "img/portfolio/06-gallery.jpg"
+    },
+    {
+      "title": "Auditorium",
+      "largeImage": "img/portfolio/07-gallery.jpg",
+      "smallImage": "img/portfolio/07-gallery.jpg"
+    },
+    {
+      "title": "Sports",
+      "largeImage": "img/portfolio/12-gallery.jpg",
+      "smallImage": "img/portfolio/12-gallery.jpg"
+    },
+    {
+      "title": "Study Center",
+      "largeImage": "img/portfolio/09-gallery.jpg",
+      "smallImage": "img/portfolio/09-gallery.jpg"
+    },
+    {
+      "title": "Library",
+      "largeImage": "img/portfolio/10-gallery.jpg",
+      "smallImage": "img/portfolio/10-gallery.jpg"
+    }
+  ],
+  "Services": [
+    {
+      "icon": "fa fa-wordpress",
+      "name": "Lorem ipsum dolor",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at."
+    },
+    {
+      "icon": "fa fa-cart-arrow-down",
+      "name": "Consectetur adipiscing",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at."
+    },
+    {
+      "icon": "fa fa-cloud-download",
+      "name": "Lorem ipsum dolor",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at."
+    },
+    {
+      "icon": "fa fa-language",
+      "name": "Consectetur adipiscing",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at."
+    },
+    {
+      "icon": "fa fa-plane",
+      "name": "Lorem ipsum dolor",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at."
+    },
+    {
+      "icon": "fa fa-pie-chart",
+      "name": "Consectetur adipiscing",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at."
+    }
+  ],
+  "Testimonials": [
+    {
+      "img": "img/testimonials/01.jpg",
+      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
+      "name": "John Doe"
+    },
+    {
+      "img": "img/testimonials/02.jpg",
+      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
+      "name": "Johnathan Doe"
+    },
+    {
+      "img": "img/testimonials/03.jpg",
+      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
+      "name": "John Doe"
+    },
+    {
+      "img": "img/testimonials/04.jpg",
+      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
+      "name": "Johnathan Doe"
+    },
+    {
+      "img": "img/testimonials/05.jpg",
+      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
+      "name": "John Doe"
+    },
+    {
+      "img": "img/testimonials/06.jpg",
+      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
+      "name": "Johnathan Doe"
+    }
+  ],
+  "Team": [
+    {
+      "img": "img/team/director.jpg",
+      "name": "Dr. Shailendra Jain",
+      "job": "Director"
+    },
+    {
+      "img": "img/team/chairman.jpg",
+      "name": "Dr. K.Radhakrishnan",
+      "job": "Chairman"
+    },
+    {
+      "img": "img/team/academics.jpg",
+      "name": "Prof. J.S.Dhillon",
+      "job": "Dean(Academics)"
+    },
+    {
+      "img": "img/team/dean.jpg",
+      "name": "Prof. A.S.Arora",
+      "job": "Dean(Faculty & Staff Welfare)"
+    }
+  ],
+  "Contact": {
+    "address": "Longowal, Dist. Sangrur (Pb), India - 148106 ",
+    "phone": "+91-1672-280057",
+    "email": "slietlongowal@sliet.ac.in",
+    "facebook": "fb.com",
+    "twitter": "twitter.com",
+    "youtube": "youtube.com"
+  },
+  "Features": [
+    {
+      "icon": "fa fa-newspaper-o",
+      "title": "NewsRoom",
+      "text": "Get Latest college updates "
+    },
+    {
+      "icon": "fa fa-bullhorn",
+      "title": "Anouncement",
+      "text": "Lorem ipsum dolor sit amet placerat facilisis felis mi in tempus eleifend pellentesque natoque etiam."
+    },
+    {
+      "icon": "fa fa-group",
+      "title": "Committee",
+      "text": "Lorem ipsum dolor sit amet placerat facilisis felis mi in tempus eleifend pellentesque natoque etiam."
+    },
+    {
+      "icon": "fa fa-comment",
+      "title": "Comment",
+      "text": "Lorem ipsum dolor sit amet placerat facilisis felis mi in tempus eleifend pellentesque natoque etiam."
+    }
+  ]
+}

@@ -37,7 +37,7 @@ const Span = styled.div`
   border-right: 1px solid blue;
 `;
 const ItemValue = styled.div``;
-const LName = styled.div``;
+// const LName = styled.div``;
 const StudentAbout = () => {
   return (
     <Container>
