@@ -84,7 +84,7 @@ const linkStyle = {
   color: "inherit",
 };
 
-const Student = () => {
+const Student = ({ user }) => {
   return (
     <Link to="/profile" style={linkStyle}>
       <Container>
@@ -94,7 +94,7 @@ const Student = () => {
         />
 
         <Info>
-          <Profession>Web Developer</Profession>
+          <Profession>{user.first_name}</Profession>
           <Name>Hinata Hyuga</Name>
           <Socials>
             <SocialIcons>

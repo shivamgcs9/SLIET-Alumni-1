@@ -4,7 +4,6 @@ import Filter from "../../components/Team/Filters/Filters";
 import Students from "../../components/Team/students/Students";
 import { Navigation } from "../../components/Home/navigation";
 
-
 const Container = styled.div`
   margin-top: 100px;
   width: 100%;
@@ -16,13 +15,12 @@ const Container = styled.div`
 
 const Teams = () => {
   return (
-      <>
-      
-    <Navigation />
-    <Container>
-      <Filter />
-      <Students />
-    </Container>
+    <>
+      <Navigation />
+      <Container>
+        <Filter />
+        <Students />
+      </Container>
     </>
   );
 };
