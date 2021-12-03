@@ -31,8 +31,8 @@ function Login() {
           else return Promise.reject("Incorrect verification code");
         })
         .then((data) => {
-          //   console.log(data);
-          setIsVerify(true);
+          console.log(data);
+          // setIsVerify(true);
         })
         .catch((error) => {
           //   console.log(error);
