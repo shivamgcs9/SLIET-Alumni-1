@@ -32,7 +32,7 @@ function Login() {
         })
         .then((data) => {
           console.log(data);
-          setIsVerify(true);
+          // setIsVerify(true);
         })
         .catch((error) => {
           //   console.log(error);
