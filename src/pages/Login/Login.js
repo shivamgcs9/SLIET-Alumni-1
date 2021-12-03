@@ -18,6 +18,8 @@ function Login() {
     if (vf !== null && id !== null) {
       variable.vf = vf;
       variable.id = id;
+      console.log(vf);
+      console.log(id);
       fetch(`${API}/verify-email`, {
         method: "POST",
         headers: {
@@ -39,20 +41,23 @@ function Login() {
           setIsVerify(false);
         });
     } else {
-      setIsVerify(true);
+      setIsVerify(false);
     }
   };
   useEffect(() => {
     accountVerification();
   });
   return (
-    { isVerify } ? (<>
-      <Redirect to = {{pathname:"/signin"}} />
-      <LoginSignUp isLogin={true} />
-    </>) : (<>
-      <LoginSignUp isLogin={true} />
+    // { isVerify } ? (<>
+    //   <Redirect to = {{pathname:"/signin"}} />
+    //   <LoginSignUp isLogin={true} />
+    // </>) : (<>
+    //   <LoginSignUp isLogin={true} />
 
-    </>)
+    // </>)
+    <>
+      <LoginSignUp isLogin={true} />;
+    </>
 
 
   );

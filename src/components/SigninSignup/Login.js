@@ -15,7 +15,7 @@ const Login = () => {
 
     const { email, password, loading, didRedirect, error } = values;
 
-    const { user } = isAuthenticated();
+    const user = isAuthenticated();
 
     const handleChange = (key) => (event) => {
         setValues({ ...values, error: false, [key]: event.target.value });
@@ -23,17 +23,17 @@ const Login = () => {
 
     const performRedirect = () => {
         if (didRedirect) {
-            // console.log(user)
-            if (user && user.role === 1) {
-                return <Redirect to="/admin/dashboard" />;
-            } else if (user && user.role === 2) {
-                return <Redirect to="/superadmin/dashboard" />;
-            } else {
-                return <Redirect to="/user/dashboard" />;
-            }
+            console.log(user)
+            // if (user && user.role === 1) {
+            //     return <Redirect to="/admin/dashboard" />;
+            // } else if (user && user.role === 2) {
+            //     return <Redirect to="/superadmin/dashboard" />;
+            // } else {
+            //     return <Redirect to="/user/dashboard" />;
+            // }
         }
         if (isAuthenticated()) {
-          return <Redirect to="/" />;
+          return <Redirect to="/dashboard" />;
         }
     };
     const onSubmit = (event) => {
