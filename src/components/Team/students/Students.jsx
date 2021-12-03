@@ -60,26 +60,34 @@ const Students = () => {
   //   );
   // };
 
-  //! backend const [users, setUsers] = useState(JsonData.slice(0, 5));
-  const [users, setUsers] = useState([]);
-  const [pageNumber, setPageNumber] = useState(0);
+  let [users, setUsers] = useState([]);
+  let [pageCount, setPageCount] = useState(1);
+  let [currentPage, setCurrentPage] = useState(0);
+  let [isLoaded, setisLoaded] = useState(false);
 
   const filledData = () => {
+    console.log(currentPage == 0);
+    let payload = {
+      page: currentPage,
+      limit: 1
+    }
+
     fetch(`${API}/get-alumni`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({}),
+      body: JSON.stringify(payload),
     })
       .then((res) => {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
         setUsers(data.data);
-        setPageNumber(data.page);
+        setPageCount(data.totalPages);
+        setCurrentPage(data.page);
+        setisLoaded(true);
       });
   };
 
@@ -87,44 +95,45 @@ const Students = () => {
     filledData();
   }, []);
 
-  const usersPerPage = 10;
-  // const pagesVisited = pageNumber * usersPerPage;
-  const pagesVisited = 1;
+  const handlePageChange = (page) => {
+    currentPage = (page.selected) + 1;
+    filledData();
+  };
+
 
   const displayUsers = users
-    //! backend  .slice(pagesVisited, pagesVisited + usersPerPage)
     .map((user) => {
       return (
         <Container>
-          {users.map((user) =>
-            // <Student user={user} key={user.id} />
-            console.log(user)
-          )}
+          <Student user={user} key={user.id} />
         </Container>
       );
     });
 
-  //! backend const pageCount = Math.ceil(users.length / usersPerPage);
-  const pageCount = 2;
-
-  const changePage = ({ selected }) => {
-    setPageNumber(selected);
-  };
+  // const changePage = ({selected}) => {
+  //   // setPageNumber(selected);
+  // };
 
   return (
     <div className="App">
-      {/* {displayUsers} */}
-      <ReactPaginate
-        previousLabel={"Previous"}
-        nextLabel={"Next"}
-        pageCount={pageCount}
-        onPageChange={changePage}
-        containerClassName={"paginationBttns"}
-        previousLinkClassName={"previousBttn"}
-        nextLinkClassName={"nextBttn"}
-        disabledClassName={"paginationDisabled"}
-        activeClassName={"paginationActive"}
-      />
+      {displayUsers}
+      {isLoaded ? (
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          pageCount={pageCount}
+          onPageChange={(e) => handlePageChange(e)}
+          containerClassName={"container"}
+          previousLinkClassName={"page"}
+          nextLinkClassName={"page"}
+          disabledClassName={"paginationDisabled"}
+          activeClassName={"active"}
+        />
+      ) : (
+        <div>Nothing to display</div>
+      )}
+
+
     </div>
   );
 };

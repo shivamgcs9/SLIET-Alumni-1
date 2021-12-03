@@ -94,7 +94,7 @@ const Student = ({ user }) => {
         />
 
         <Info>
-          <Profession>{user.first_name}</Profession>
+          <Profession>{user.userId[0].name}</Profession>
           <Name>Hinata Hyuga</Name>
           <Socials>
             <SocialIcons>
