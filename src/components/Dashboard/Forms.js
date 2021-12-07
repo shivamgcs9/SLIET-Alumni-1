@@ -1,4 +1,7 @@
 import React from "react";
+import { useEffect, useState } from 'react';
+import { useRef } from "react";
+import {API} from '../../backend'
 import PropTypes from "prop-types";
 import {
   Card,
@@ -12,13 +15,145 @@ import {
   FormInput,
   FormSelect,
   FormTextarea,
-  Button
 } from "shards-react";
+import Button from '@mui/material/Button';
 
-export const Forms = ({ title }) => (
+
+ 
+export const Forms = () => {
+  const [user,setUser]= useState({
+    name:"",
+    dob: "",
+    email:'',
+    phoneNumber: "",
+    regNo: "",
+    branchOfStudy: "",
+    collegeName: "",
+    yearOfStudy: "",
+    image:'',
+    address: "",
+    socialmedia: {
+        facebook: "",
+        instagram: "",
+        linkedin: "",
+    }
+  });
+
+  const [err,setErr] = useState("");
+  const [isErr,setIsErr] = useState(false);
+  const [errAt,setErrAt] = useState("");
+
+    const handleChange = (event) => {
+    if ((event.target.id === "firstName")) {
+      setUser({ ...user, name: event.target.value});
+      console.log(event.target.value)
+    }else if(event.target.id ==='dob'){
+      setUser({ ...user, dob: event.target.value});
+    }
+    else if((event.target.id) ==='address'){
+      console.log(event.target.value)
+      setUser({ ...user, address: event.target.value});
+    }
+
+  };
+
+  useEffect(() => {
+    
+    fetch(`${API}/profile-update`, {
+      method:'POST',
+      headers: {
+        authorization:
+          "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWExMThkYjM2NGU0NTc2NWZmMTJlYzkiLCJyb2xlIjowLCJpYXQiOjE2Mzc5NDc3NTV9.QfXnMTrdoi3XQX2v2rdACXgBC5AKaDXdLDwqqCU7Nnc",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((data) => data.json())
+      .then((result) => setUser(result));
+  }, []);
+
+    const updateProfile=()=>{
+    
+    return fetch(`${API}/profile-update`,{
+      method:'POST',
+      headers: {
+        authorization:
+          "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWExMThkYjM2NGU0NTc2NWZmMTJlYzkiLCJyb2xlIjowLCJpYXQiOjE2Mzc5NDc3NTV9.QfXnMTrdoi3XQX2v2rdACXgBC5AKaDXdLDwqqCU7Nnc",
+        "Content-Type": "application/json",
+      },
+      body:JSON.stringify({
+        "dob":user.dob,
+        "phoneNumber":user.phoneNumber,
+        "address":user.address,
+        "collegeName":"SLIET",
+        "socialmedia":{
+                "facebook":"Rucika",
+                "instagram":"Ruchika",
+                "linkedin":"Ruchika"
+                },
+        "profileImage":user.profileImage
+        
+      })
+    }).then(response=>{
+      return( response.json());
+
+      }).catch(err=>{
+          console.log(err);
+      });
+  }
+
+
+    // const [value, setValue] = React.useState("Controlled");
+  
+  // const [category, setCategory] = React.useState("EUR");
+  
+
+  const phoneNumber = useRef(null);
+  const email = useRef(null);
+    const submitted = () => {
+    
+    const reEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    const rePhoneNumber =/^((\+*)((0[ -]*)*|((91 )*))((\d{12})+|(\d{10})+))|\d{5}([- ]*)\d{6}$/i;
+
+    console.log(phoneNumber.current.value)
+    if(rePhoneNumber.test(phoneNumber.current.value)){
+      setUser({ ...user, phoneNumber: phoneNumber.current.value});  
+    }
+    
+    
+    // if (!reEmail.test(email.current.value)) {
+    //   // 
+    //   console.log("Invalid email");
+    // }
+    // else if (!rePhoneNumber.test(phoneNumber.current.value)) {
+    //   setIsErr(true);
+    //   console.log('{HOPNE NUMBER')
+    //   setErr("Invalid Phone number");
+    //   setErrAt("phoneNumber")
+    //   console.log("invalid phone number");
+    // }else if(!user.address){
+    //   console.log('ADDRESS')
+    //   setIsErr(true);
+    //   setErr('Address is Required')
+    // }else if(!user.dob){
+    //   setIsErr(true);
+
+    //   setErr('invalid DOB')
+    //   console.log('DOB')
+    // }
+    // else if(!user.profileImage){
+    //   console.log(user.image)
+    //   setIsErr(true)
+    //   setErr('Please upload image')
+    // }
+    // else{
+      
+    // }
+    updateProfile().then(response=>console.log(response));
+  }
+  return(
   <Card small className="mb-4">
     <CardHeader className="border-bottom">
-      <h6 className="m-0">{title}</h6>
+      <h6 className="m-0">{'HASTA LA VISTA BABY'}</h6>
     </CardHeader>
     <ListGroup flush>
       <ListGroupItem className="p-3">
@@ -28,84 +163,96 @@ export const Forms = ({ title }) => (
               <Row form>
                 {/* First Name */}
                 <Col md="6" className="form-group">
-                  <label htmlFor="feFirstName">First Name</label>
+                  <label htmlFor="firstName">First Name</label>
                   <FormInput
-                    id="feFirstName"
+                    id="firstName"
                     placeholder="First Name"
-                    value="Sierra"
-                    onChange={() => {}}
+                    value={user.name}
+                    onChange={handleChange}
                   />
                 </Col>
                 {/* Last Name */}
                 <Col md="6" className="form-group">
-                  <label htmlFor="feLastName">Last Name</label>
+                  <label htmlFor="email">Email</label>
                   <FormInput
-                    id="feLastName"
-                    placeholder="Last Name"
-                    value="Brooks"
-                    onChange={() => {}}
+                    type="email"
+                    innerRef={email}
+                    id="email"
+                    placeholder="Email Address"
+                    value={user.email}
+                    onChange={handleChange}
+                    
                   />
                 </Col>
               </Row>
               <Row form>
                 {/* Email */}
                 <Col md="6" className="form-group">
-                  <label htmlFor="feEmail">Email</label>
+                  <label htmlFor="dob">Date Of Birth</label>
                   <FormInput
-                    type="email"
-                    id="feEmail"
-                    placeholder="Email Address"
-                    value="sierra@example.com"
-                    onChange={() => {}}
-                    autoComplete="email"
+                    type="date"
+                    id="dob"
+                    placeholder="Date Of Birth"
+                    value={user.dob}
+                    onChange={handleChange}
+                    
                   />
                 </Col>
                 {/* Password */}
                 <Col md="6" className="form-group">
-                  <label htmlFor="fePassword">Password</label>
+                  <label htmlFor="phoneNumber">Contact Number</label>
                   <FormInput
-                    type="password"
-                    id="fePassword"
-                    placeholder="Password"
-                    value="EX@MPL#P@$$w0RD"
-                    onChange={() => {}}
-                    autoComplete="current-password"
+                    type="text"
+                    id="phoneNumber"
+                    
+                    innerRef={phoneNumber}
+                    placeholder="Contact Number"
+                    value={user.phoneNumber}
+                    onChange={handleChange}
+                    maxLength='13'
                   />
                 </Col>
               </Row>
-              <FormGroup>
-                <label htmlFor="feAddress">Address</label>
-                <FormInput
-                  id="feAddress"
-                  placeholder="Address"
-                  value="1234 Main St."
-                  onChange={() => {}}
-                />
-              </FormGroup>
+              <Row form>
+              <Col md="12" className="form-group">
+                  <label htmlFor="address">Address</label>
+                  <FormInput
+                    type="text"
+                    id="address"
+                    placeholder="Address"
+                    value={user.address}
+                    onChange={() => {}}
+                    
+                  />
+                </Col>
+              </Row>
+          
               <Row form>
                 {/* City */}
-                <Col md="6" className="form-group">
-                  <label htmlFor="feCity">City</label>
+                <Col md="4" className="form-group">
+                  <label htmlFor="feCity">LinkedIn</label>
                   <FormInput
                     id="feCity"
-                    placeholder="City"
+                    placeholder="LinkedIn"
                     onChange={() => {}}
                   />
                 </Col>
                 {/* State */}
                 <Col md="4" className="form-group">
-                  <label htmlFor="feInputState">State</label>
-                  <FormSelect id="feInputState">
-                    <option>Choose...</option>
-                    <option>...</option>
-                  </FormSelect>
+                  <label htmlFor="feInputState">Facebook</label>
+                  <FormInput
+                    id="feCity"
+                    placeholder="Facebook"
+                    onChange={() => {}}
+                  />
                 </Col>
                 {/* Zip Code */}
-                <Col md="2" className="form-group">
-                  <label htmlFor="feZipCode">Zip</label>
+                <Col md="4" className="form-group">
+                  <label htmlFor="feZipCode">Instagram</label>
                   <FormInput
-                    id="feZipCode"
-                    placeholder="Zip"
+                    id="feCity"
+                    placeholder="Instagram"
+                    
                     onChange={() => {}}
                   />
                 </Col>
@@ -113,18 +260,18 @@ export const Forms = ({ title }) => (
               <Row form>
                 {/* Description */}
                 <Col md="12" className="form-group">
-                  <label htmlFor="feDescription">Description</label>
+                  <label htmlFor="feDescription">Comment</label>
                   <FormTextarea id="feDescription" rows="5" />
                 </Col>
               </Row>
-              <Button theme="accent">Update Account</Button>
+              <Button variant='contained' sx={{fontSize:'12px'}} onClick={submitted} >Update Account</Button>
             </Form>
           </Col>
         </Row>
       </ListGroupItem>
     </ListGroup>
   </Card>
-);
+  )};
 
 Forms.propTypes = {
   /**
@@ -158,59 +305,12 @@ Forms.defaultProps = {
 
 // export default function MultilineTextFields() {
 //   // const [infos, setInfos] = useState([]);
-//   useEffect(() => {
-    
-//     const API = "http://04fa-203-192-214-22.ngrok.io/api/profile-update";
-//     fetch(API, {
-//       method:'POST',
-//       headers: {
-//         authorization:
-//           "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWExMThkYjM2NGU0NTc2NWZmMTJlYzkiLCJyb2xlIjowLCJpYXQiOjE2Mzc5NDc3NTV9.QfXnMTrdoi3XQX2v2rdACXgBC5AKaDXdLDwqqCU7Nnc",
-//         "Content-Type": "application/json",
-//       },
-//     })
-//       .then((data) => data.json())
-//       .then((result) => setUser(result));
-//   }, []);
 
-//   const updateProfile=()=>{
-//     const API = "http://04fa-203-192-214-22.ngrok.io/api/profile-update";
-//     return fetch(API,{
-//       method:'POST',
-//       headers: {
-//         authorization:
-//           "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWExMThkYjM2NGU0NTc2NWZmMTJlYzkiLCJyb2xlIjowLCJpYXQiOjE2Mzc5NDc3NTV9.QfXnMTrdoi3XQX2v2rdACXgBC5AKaDXdLDwqqCU7Nnc",
-//         "Content-Type": "application/json",
-//       },
-//       body:JSON.stringify({
-//         "dob":user.dob,
-//         "phoneNumber":user.phoneNumber,
-//         "address":user.address,
-//         "collegeName":"SLIET",
-//         "socialmedia":{
-//                 "facebook":"Rucika",
-//                 "instagram":"Ruchika",
-//                 "linkedin":"Ruchika"
-//                 },
-//         "profileImage":user.profileImage
-        
-//       })
-//     }).then(response=>{
-//       return( response.json());
 
-//       }).catch(err=>{
-//           console.log(err);
-//       });
-//   }
+
 
   
-//   // const [value, setValue] = React.useState("Controlled");
-//   const [isErr, setIsErr] = React.useState(false);
-//   // const [category, setCategory] = React.useState("EUR");
-//   const [err, setErr] = React.useState("");
 
-//   const phoneNumber = useRef(null);
-//   const email = useRef(null);
 
 //   const handleChange = (event) => {
 //     if ((event.target.id === "firstName")) {
@@ -231,36 +331,7 @@ Forms.defaultProps = {
 //     // this contains image to b uploaded
 //   };
 
-//   const submitted = () => {
-    
-//     const reEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-//     const rePhoneNumber =
-//       /^((\+*)((0[ -]*)*|((91 )*))((\d{12})+|(\d{10})+))|\d{5}([- ]*)\d{6}$/i;
 
-//     if (!reEmail.test(email.current.value)) {
-//       // 
-//       console.log("Invalid email");
-//     }
-//     else if (!rePhoneNumber.test(phoneNumber.current.value)) {
-//       setIsErr(true);
-//       setErr("Invalid Phone number");
-//       console.log("invalid phone number");
-//     }else if(!user.address){
-      
-//       setIsErr(true);
-//       setErr('Address is Required')
-//     }else if(!user.dob){
-//       setIsErr(true);
-//       setErr('invalid DOB')
-//     }
-//     else if(!user.profileImage){
-//       console.log(user.image)
-//       setIsErr(true)
-//       setErr('Please upload image')
-//     }
-//     else{
-//       updateProfile().then(response=>console.log(response));
-//     }
 
 //     console.log();
 
@@ -437,4 +508,4 @@ Forms.defaultProps = {
      
 //     </Box>
 //   );
-// }
+
