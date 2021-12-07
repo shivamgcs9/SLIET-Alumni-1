@@ -73,8 +73,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
       position: 'relative',
       whiteSpace: 'nowrap',
       width: drawerWidth,
-      // backgroundImage: 'linear-gradient(to right top, #0435bf, #5858cd, #847cd9, #aaa2e6, #cfc9f1, #cedcf9, #d9ecfc, #edfaff, #cdfbff, #a7fdff, #78feff, #34fffa)',
-      // backgroundImage: 'linear-gradient(to right top, #34fffa, #78feff, #a7fdff, #cdfbff, #edfaff, #d9ecfc, #cedcf9, #cfc9f1, #aaa2e6, #847cd9, #5858cd, #0435bf)',
       transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
@@ -107,15 +105,13 @@ function DashboardContent() {
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ 
         display: 'flex', 
-        // backgroundImage: 'linear-gradient(to right top, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff, #fbfdff, #f5fbff, #edfaff, #cdfbff, #a7fdff, #78feff, #34fffa)',
         }}>
         <CssBaseline />
         <AppBar 
         position="absolute" 
         open={open} 
         style={{backgroundColor: 'white',
-        // backgroundImage: 'linear-gradient(to right, #6372ff 0%, #5ca9fb 100%)',
-        // backgroundImage: 'linear-gradient(to right top, #34fffa, #78feff, #a7fdff, #cdfbff, #edfaff, #d9ecfc, #cedcf9, #cfc9f1, #aaa2e6, #847cd9, #5858cd, #0435bf)'
+       
       }}>
           <Toolbar
             sx={{
@@ -200,16 +196,18 @@ function DashboardContent() {
             flexGrow: 1,
             height: '100vh',
             overflow: 'auto',
+            backgroundColor:'#F5F6F8',
+            
           }}
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             
-          <Grid container spacing={2} columns={16}>
-              <Grid item xs={6} style={{height:'80vh'}}>
-                <Item ><UserDetails/></Item>
+          <Grid container spacing={2} columns={10}>
+              <Grid item xs={4} l={10} style={{height:'80vh'}}>
+                <Item><UserDetails/></Item>
               </Grid>
-              <Grid item xs={10}>
+              <Grid item xs={6} l={6}>
                 <Item><Forms/></Item>
               </Grid>
           </Grid>
