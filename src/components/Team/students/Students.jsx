@@ -69,7 +69,9 @@ const Students = () => {
     console.log(currentPage == 0);
     let payload = {
       page: currentPage,
-      limit: 1
+      limit: 5,
+      "name":"Ri",
+      "passingYear":2022
     }
 
     fetch(`${API}/get-alumni`, {
