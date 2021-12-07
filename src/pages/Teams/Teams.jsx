@@ -1,4 +1,4 @@
-import { FaSearch } from "react-icons/fa";
+// import { FaSearch } from "react-icons/fa";
 import styled from "styled-components";
 import Filter from "../../components/Team/Filters/Filters";
 import Students from "../../components/Team/students/Students";
