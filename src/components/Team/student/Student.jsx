@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 const Socials = styled.div`
   opacity: 0;
-
   display: flex;
   transition: all 0.5s ease;
 `;
