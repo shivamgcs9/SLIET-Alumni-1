@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import styled from "styled-components";
+import { API } from "../../../../src/backend";
 
 const Container = styled.div`
   /* margin: 18px 200px; */
@@ -100,24 +101,44 @@ const Button = styled.button`
 
 const Filters = () => {
   const [open, setOpen] = useState(false);
-  const [filters, setFilters] = useState({});
-
-  const handleFilters = (e) => {
+  let [filters, setFilters] = useState({});
+  let [users, setUsers] = useState([]);
+  let [pageCount, setPageCount] = useState(1);
+  let [currentPage, setCurrentPage] = useState(0);
+  let [isLoaded, setisLoaded] = useState(false);
+  
+  const handleFilters = (e, key) => {
     e.preventDefault();
     const value = e.target.value;
-    setFilters({
-      ...filters,
-      [e.target.name]: value,
-    });
-    console.log(filters);
-    console.log(value);
+    filters = {
+      ...filters, ...{
+        [key]: value
+      }
+    }
+    fetch(`${API}/get-alumni`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(filters),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setUsers(data.data);
+        setPageCount(data.totalPages);
+        setCurrentPage(data.page);
+        setisLoaded(true);
+      });
   };
   return (
     <Container>
       <SearchContainer>
         <InputBox>
           <Input
-            placeholder="Search a Student, branch or job location"
+            placeholder="Search a Student"
             type="text"
           />
           <FaSearch />
@@ -129,7 +150,7 @@ const Filters = () => {
         </FilterItem>
 
         <FilterItem>
-          <Select onChange={handleFilters}>
+          <Select onChange={(e) => handleFilters(e, "branchOfStudy")}>
             <Option defaultValue>course</Option>
             <Option>Computer Science</Option>
             <Option>Mechanical Engineering</Option>
@@ -138,23 +159,23 @@ const Filters = () => {
           </Select>
         </FilterItem>
         <FilterItem className="filterItem">
-          <Select name="" id="" onChange={handleFilters}>
+          <Select name="" id="" onChange={(e) => handleFilters(e, "passingYear")}>
             <Option defaultValue>Passing Year</Option>
-            <Option value="">2018</Option>
-            <Option value="">2019</Option>
-            <Option value="">2020</Option>
-            <Option value="">2021</Option>
-            <Option value="">2022</Option>
+            <Option>2018</Option>
+            <Option>2019</Option>
+            <Option>2020</Option>
+            <Option>2021</Option>
+            <Option>2022</Option>
           </Select>
         </FilterItem>
         <FilterItem>
-          <Select name="" id="" onChange={handleFilters}>
+          <Select name="" id="" onChange={(e) => handleFilters(e, "location")}>
             <Option defaultValue>Location</Option>
-            <Option value="">Uttrakhand</Option>
-            <Option value="">Punjab</Option>
-            <Option value="">Himachal</Option>
-            <Option value="">Delhi</Option>
-            <Option value="">Shimla</Option>
+            <Option>Uttrakhand</Option>
+            <Option>Punjab</Option>
+            <Option>Himachal</Option>
+            <Option>Delhi</Option>
+            <Option>Shimla</Option>
           </Select>
         </FilterItem>
         <Button onClick={() => setOpen(!open)}>Apply</Button>

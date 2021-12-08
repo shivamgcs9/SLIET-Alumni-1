@@ -24,12 +24,8 @@ const Students = () => {
   let [currentPage, setCurrentPage] = useState(0);
   let [isLoaded, setisLoaded] = useState(false);
 
-  const filledData = () => {
-    console.log(currentPage === 0);
-    let payload = {
-      page: currentPage,
-      limit: 10,
-    };
+const filledData = (data = {}) => {
+    let payload = data;
 
     fetch(`${API}/get-alumni`, {
       method: "POST",
@@ -57,7 +53,7 @@ const Students = () => {
 
   const handlePageChange = (page) => {
     currentPage = page.selected + 1;
-    filledData();
+    filledData({ limit: currentPage });
   };
 
   const displayUsers = users.map((user) => {
