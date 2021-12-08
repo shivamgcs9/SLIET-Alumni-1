@@ -6,6 +6,7 @@ import { API } from "../../../../src/backend";
 import { FaSearch } from "react-icons/fa";
 
 import "./students.css";
+import { Search } from "@mui/icons-material";
 
 const ContainerFill = styled.div`
   width: 100%;
@@ -127,8 +128,15 @@ const Students = () => {
 
   const handlePageChange = (page) => {
     currentPage = page.selected + 1;
+    filters = { ...filters, ...{ page: currentPage } }
     filledData();
   };
+
+  const SearchName = (e) => {
+    filters = { ...filters, ...{ name: e.target.value } }
+    filledData();
+
+  }
 
   const displayUsers = users.map((user) => {
     return <Student user={user} key={user.id} />;
@@ -140,7 +148,7 @@ const Students = () => {
         <ContainerFill>
           <SearchContainer>
             <InputBox>
-              <Input
+              <Input onChange={(e) => SearchName(e)}
                 placeholder="Search a Student, branch or location"
                 type="text"
               />
@@ -151,14 +159,18 @@ const Students = () => {
           <Filter>
             <FilterItem>
               <Span onClick={() => setOpen(!open)}>Filters:</Span>
-              <Span>Clear</Span>
+              <Span onClick={() => {
+                currentPage = 1;
+                setFilter({});
+                filledData()
+              }}>Clear</Span>
             </FilterItem>
 
             {open && (
               <>
                 <FilterItem>
                   <Select onChange={(e) => handleFilters(e, "branchOfStudy")}>
-                    <Option defaultValue>course</Option>
+                    <Option selected disabled hidden>Course</Option>
                     <Option>Computer Science</Option>
                     <Option>Mechanical Engineering</Option>
                     <Option>Chemical Engineering</Option>
@@ -171,7 +183,7 @@ const Students = () => {
                     id=""
                     onChange={(e) => handleFilters(e, "passingYear")}
                   >
-                    <Option defaultValue>Passing Year</Option>
+                    <Option selected disabled hidden>Passing Year</Option>
                     <Option value="2018">2018</Option>
                     <Option value="2019">2019</Option>
                     <Option value="2020">2020</Option>
@@ -185,7 +197,7 @@ const Students = () => {
                     id=""
                     onChange={(e) => handleFilters(e, "location")}
                   >
-                    <Option defaultValue>Location</Option>
+                    <Option selected disabled hidden>Location</Option>
                     <Option value="Uttrakhand">Uttrakhand</Option>
                     <Option value="Punjab">Punjab</Option>
                     <Option value="Himachal">Himachal</Option>
@@ -193,7 +205,7 @@ const Students = () => {
                     <Option value="Shimla">Shimla</Option>
                   </Select>
                 </FilterItem>
-                <Button onClick={() => setOpen(!open)}>Apply</Button>
+                <Button onClick={() => filledData()}>Apply</Button>
               </>
             )}
           </Filter>

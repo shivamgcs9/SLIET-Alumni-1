@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import StudentAbout from "../../components/Team/studentAbout/StudentAbout";
 import StudentProfile from "../../components/Team/studentProfile/StudentProfile";
-
+import { Navigation } from "../../components/Home/navigation";
+import { API } from "../../../src/backend";
+import { isAuthenticated } from "../../auth/helper";
+// import { isAuthenticated} from "../../auth/helper";
 const Container = styled.div`
   width: 100%;
   display: flex;
@@ -13,12 +16,46 @@ const Container = styled.div`
   }
 `;
 
+
+
 const Profile = () => {
+  let [users, setUsers] = useState([]);
+  let [isLoaded, setisLoaded] = useState(false);
+
+  const filledData = () => {
+    fetch(`${API}/get-profile`, {
+      method: "GET",
+      headers: {
+        Authorization: `bearer ${isAuthenticated()}`,
+      },
+    }).then((res) => {
+      return res.json();
+    })
+      .then((data) => {
+        if (data) {
+          console.log('>>', data);
+          setUsers(data);
+          setisLoaded(true);
+        }
+      });
+  };
+
+  useEffect(() => {
+    filledData();
+  }, []);
+
+
   return (
-    <Container>
-      <StudentProfile />
-      <StudentAbout />
-    </Container>
+    <>
+      <Navigation />
+      {isLoaded ? (
+        <Container>
+          <StudentProfile data={users} key={users._id} />
+          <StudentAbout data={users} key={users._id} />
+        </Container>
+      ) : "Loading..."}
+
+    </>
   );
 };
 

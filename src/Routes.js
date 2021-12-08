@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard/Dash";
 import LoginSignUp from "./components/SigninSignup/LoginSignUp";
 import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
+import AlumniProfile from "./pages/Profile/Profile"
 
 function Routes() {
   return (
@@ -16,6 +17,7 @@ function Routes() {
         <Route path="/dashboard" exact component={Dashboard} />
         <Route path="/register" exact component={Register} />
         <Route path="/signin" component={Login} />
+        <Route path="/profile/:id" component={AlumniProfile} />
       </Switch>
     </Router>
   );

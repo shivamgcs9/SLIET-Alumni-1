@@ -1,6 +1,7 @@
 import { FaDribbble, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import avatar from "../../../assets/user.png";
 
 const Socials = styled.div`
   opacity: 0;
@@ -85,16 +86,16 @@ const linkStyle = {
 
 const Student = ({ user }) => {
   return (
-    <Link to="/profile" style={linkStyle}>
+    <Link to={`/profile/${user.userId[0]._id}`} style={linkStyle}>
       <Container>
         <Profile
-          src="https://cdn.myanimelist.net/images/characters/6/278736.jpg"
+          src={avatar}
           alt=""
         />
-
+        {user.userId[0].designation}
         <Info>
-          <Profession>{user.userId[0].name}</Profession>
-          <Name>Hinata Hyuga</Name>
+          <Profession>{user.designation}</Profession>
+          <Name>{user.userId[0].name}</Name>
           <Socials>
             <SocialIcons>
               <Link to="/blog" style={linkStyle}>

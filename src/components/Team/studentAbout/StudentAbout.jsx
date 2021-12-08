@@ -38,7 +38,7 @@ const Span = styled.div`
 `;
 const ItemValue = styled.div``;
 // const LName = styled.div``;
-const StudentAbout = () => {
+const StudentAbout = ({ data }) => {
   return (
     <Container>
       <BoxContainer>
@@ -46,27 +46,27 @@ const StudentAbout = () => {
           <Title>Basic Information</Title>
           <BoxItem>
             <Span>Full Name</Span>
-            <ItemValue>Shivam Kumar</ItemValue>
+            <ItemValue>{data.name}</ItemValue>
           </BoxItem>
           <BoxItem>
             <Span>Email Address</Span>
-            <ItemValue>Shivam@gmail.com</ItemValue>
+            <ItemValue>{data.email}</ItemValue>
           </BoxItem>
           <BoxItem>
             <Span>Designation</Span>
-            <ItemValue> Web Developer</ItemValue>
+            <ItemValue> {data.alumniId.designation} </ItemValue>
           </BoxItem>
           <BoxItem>
             <Span>Registration No.</Span>
-            <ItemValue>1930071</ItemValue>
+            <ItemValue>{data.alumniId.designation}</ItemValue>
           </BoxItem>
           <BoxItem>
             <Span>Batch</Span>
-            <ItemValue>2018-2022</ItemValue>
+            <ItemValue>{data.alumniId.batch}-{data.alumniId.passingYear}</ItemValue>
           </BoxItem>
           <BoxItem>
             <Span>Branch</Span>
-            <ItemValue>Computer Science</ItemValue>
+            <ItemValue>{data.alumniId.branchOfStudy}</ItemValue>
           </BoxItem>
         </Box>
       </BoxContainer>
@@ -79,15 +79,15 @@ const StudentAbout = () => {
           </BoxItem>
           <BoxItem>
             <Span>DOB</Span>
-            <ItemValue>09 July 1997</ItemValue>
+            <ItemValue>{data.dob.split('T')[0]}</ItemValue>
           </BoxItem>
           <BoxItem>
             <Span>Phone No.</Span>
-            <ItemValue>8198978095</ItemValue>
+            <ItemValue>{data.phoneNumber}</ItemValue>
           </BoxItem>
           <BoxItem>
             <Span>Address</Span>
-            <ItemValue>Kashipur, Uttrakhand, INDIA</ItemValue>
+            <ItemValue>{data.address}</ItemValue>
           </BoxItem>
         </Box>
       </BoxContainer>
@@ -96,15 +96,15 @@ const StudentAbout = () => {
           <Title>Comapnies Work with</Title>
           <BoxItem>
             <Span>Compnay Name</Span>
-            <ItemValue>Google</ItemValue>
+            <ItemValue>{data.alumniId.companyName}</ItemValue>
           </BoxItem>
           <BoxItem>
             <Span>Company Address</Span>
-            <ItemValue>Banglore, India</ItemValue>
+            <ItemValue>{data.alumniId.companyAddress}</ItemValue>
           </BoxItem>
           <BoxItem>
             <Span>Company Email</Span>
-            <ItemValue>officialGoogle@gmail.com</ItemValue>
+            <ItemValue>{data.alumniId.companyEmail}</ItemValue>
           </BoxItem>
         </Box>
       </BoxContainer>

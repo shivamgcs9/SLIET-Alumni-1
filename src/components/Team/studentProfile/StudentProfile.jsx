@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { FaDribbble, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import avatar from "../../../assets/user.png";
 
 const Container = styled.div`
   flex: 3;
@@ -80,19 +81,19 @@ const linkStyle = {
   color: "inherit",
 };
 
-const StudentProfile = () => {
+const StudentProfile = ({ data }) => {
   return (
     <Container>
       <ImgContainer>
         <Image
-          src="https:images.pexels.com/photos/2811089/pexels-photo-2811089.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+          src={avatar}
           alt=""
         />
       </ImgContainer>
       <Info>
-        <Name>Natasha</Name>
-        <Email>Natasha@gmail.com</Email>
-        <Designation>Web Developer</Designation>
+        <Name>{data.name}</Name>
+        <Email>{data.email}</Email>
+        <Designation>{data.alumniId.designation}</Designation>
         <Socials>
           <SocialIcons>
             <Link to="/blog" style={linkStyle}>

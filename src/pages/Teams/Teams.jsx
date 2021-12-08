@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { isAuthenticated } from "../../auth/helper";
 import styled from "styled-components";
-import Filter from "../../components/Team/Filters/Filters";
 import Students from "../../components/Team/students/Students";
 import { Navigation } from "../../components/Home/navigation";
 

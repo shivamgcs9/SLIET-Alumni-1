@@ -19,7 +19,7 @@ import {
   FormTextarea,
 } from "shards-react";
 
-import avatar from "../../assets/avatarImage.jpg";
+import avatar from "../../assets/user.png";
 import { isAuthenticated } from "../../auth/helper";
 
 const UserDetails = ({ userDetails }) => {
