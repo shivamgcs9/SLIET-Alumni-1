@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRef } from "react";
 import {API} from '../../backend'
 import PropTypes from "prop-types";
+import { isAuthenticated } from "../../auth/helper";
 import {
   Card,
   CardHeader,
@@ -63,12 +64,14 @@ export const Forms = () => {
       method:'POST',
       headers: {
         authorization:
-          "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWExMThkYjM2NGU0NTc2NWZmMTJlYzkiLCJyb2xlIjowLCJpYXQiOjE2Mzc5NDc3NTV9.QfXnMTrdoi3XQX2v2rdACXgBC5AKaDXdLDwqqCU7Nnc",
+          `bearer ${isAuthenticated()}`,
         "Content-Type": "application/json",
       },
     })
       .then((data) => data.json())
-      .then((result) => setUser(result));
+      .then((result) => {setUser({...user ,...result});
+        console.log({...user ,...result});
+        }).then(console.log(user));
   }, []);
 
     const updateProfile=()=>{
@@ -77,7 +80,7 @@ export const Forms = () => {
       method:'POST',
       headers: {
         authorization:
-          "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWExMThkYjM2NGU0NTc2NWZmMTJlYzkiLCJyb2xlIjowLCJpYXQiOjE2Mzc5NDc3NTV9.QfXnMTrdoi3XQX2v2rdACXgBC5AKaDXdLDwqqCU7Nnc",
+          `bearer ${isAuthenticated()}`,
         "Content-Type": "application/json",
       },
       body:JSON.stringify({
@@ -86,9 +89,9 @@ export const Forms = () => {
         "address":user.address,
         "collegeName":"SLIET",
         "socialmedia":{
-                "facebook":"Rucika",
-                "instagram":"Ruchika",
-                "linkedin":"Ruchika"
+                "facebook":user.socialmedia.facebook,
+                "instagram":user.socialmedia.instagram,
+                "linkedin":user.socialmedia.linkedin
                 },
         "profileImage":user.profileImage
         
@@ -163,7 +166,7 @@ export const Forms = () => {
               <Row form>
                 {/* First Name */}
                 <Col md="6" className="form-group">
-                  <label htmlFor="firstName">First Name</label>
+                  <label htmlFor="firstName">Name</label>
                   <FormInput
                     id="firstName"
                     placeholder="First Name"
