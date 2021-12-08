@@ -18,7 +18,7 @@ const Teams = () => {
     <>
       <Navigation />
       <Container>
-        <Filter />
+        {/* <Filter /> */}
         <Students />
       </Container>
     </>

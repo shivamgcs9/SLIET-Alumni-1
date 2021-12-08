@@ -106,7 +106,7 @@ const Filters = () => {
   let [pageCount, setPageCount] = useState(1);
   let [currentPage, setCurrentPage] = useState(0);
   let [isLoaded, setisLoaded] = useState(false);
-  
+
   const handleFilters = (e, key) => {
     e.preventDefault();
     const value = e.target.value;
