@@ -1,10 +1,10 @@
-import React,{useState} from "react";
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
+import React, { useEffect, useState } from "react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
 import PropTypes from "prop-types";
-import {API} from '../../backend'
+import { API } from "../../backend";
 import {
   Card,
   CardHeader,
@@ -19,84 +19,229 @@ import {
   FormTextarea,
 } from "shards-react";
 
-import avatar from '../../assets/avatarImage.jpg'
+import avatar from "../../assets/avatarImage.jpg";
+import { isAuthenticated } from "../../auth/helper";
 
 const UserDetails = ({ userDetails }) => {
-  const [open,setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
     width: 800,
-    bgcolor: 'background.paper',
-    borderRadius:'8px',
+    bgcolor: "background.paper",
+    borderRadius: "8px",
     boxShadow: 24,
     p: 4,
   };
 
-  const handleChange=()=>{
-    console.log('changed')
-  }
+  const handleChange = (event) => {
+    switch(event.target.id){
+      case 'companyName':
+        setAlumniData({...alumniData,companyName:event.target.value})
+        break;
+      case 'companyAddress':
+        setAlumniData({...alumniData,companyAddress:event.target.value})
+        break;
+      case 'companyEmail':
+        setAlumniData({...alumniData,companyEmail:event.target.value})
+        break;
+      case 'country':
+        setAlumniData({...alumniData,country:event.target.value})
+        break;
+      case 'designation':
+        setAlumniData({...alumniData,designation:event.target.value})
+        break;
+      case 'yearOfExp':
+        setAlumniData({...alumniData,yearofExp:event.target.value})
+        break;
+      case 'batch':
+        setAlumniData({...alumniData,batch:event.target.value})
+        break;
+      case 'branchOfStudy':
+        setAlumniData({...alumniData,branchOfStudy:event.target.value})
+        break;
+      case 'city':
+        setAlumniData({...alumniData,city:event.target.value})
+        break;
+      case 'state':
+        setAlumniData({...alumniData,state:event.target.value})
+        break;
+      case 'regNo':
+        setAlumniData({...alumniData,regNo:event.target.value})
+        break;
+      case 'passingYear':
+        setAlumniData({...alumniData,passingYear:event.target.value})
+        break;
+    }
+  };
 
-  const updateProfile=()=>{
-    
-    return fetch(`${API}/request-alumni`,{
-      method:'POST',
+  const [alumniData,setAlumniData] = useState({
+    batch: '',
+    branchOfStudy: "",
+    city: "",
+    companyAddress: "",
+    companyEmail: "",
+    companyName: "",
+    country: "",
+    designation: "",
+    passingYear: '',
+    regNo: "",
+    state: "",
+    userId: "",
+    yearOfExp: "",
+  });
+
+  const [status,setStatus]=useState('Request Alumni')
+
+  const requestAlumni=()=>{
+    setOpen(true)
+
+    fetch(`${API}/get-profile`,{
+      method:'GET',
+      headers:{
+        authorization:
+        `bearer ${isAuthenticated()}`,
+        "Content-Type": "application/json",
+      }
+    })
+    .then((data)=>data.json())
+    .then((result)=>{
+      if(result.alumniId)
+      {
+        setAlumniData(result.alumniId)
+        setStatus('Update Alumni Data')
+      }
+      else{
+        setStatus('RequestAlumni')
+      }
+    })
+  }
+  useEffect(() => {
+
+    fetch(`${API}/get-profile`, {
+      method: 'GET',
       headers: {
         authorization:
-          "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWExMThkYjM2NGU0NTc2NWZmMTJlYzkiLCJyb2xlIjowLCJpYXQiOjE2Mzc5NDc3NTV9.QfXnMTrdoi3XQX2v2rdACXgBC5AKaDXdLDwqqCU7Nnc",
+          `bearer ${isAuthenticated()}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((data) => data.json())
+      .then((result) => {
+        if(result.alumniId){
+          setStatus('Update Alumni Data')
+        }  
+      });
+  }, []);
+
+  const updateProfile = () => {
+
+    fetch(`${API}/alumni-update`, {
+      method: 'POST',
+      headers: {
+        authorization:
+          `bearer ${isAuthenticated()}`,
         "Content-Type": "application/json",
       },
       body:JSON.stringify({
-        "companyName":"BugsMirror",
-        "companyAddress":"Indore",
-        "companyEmail":"BugsMirror@gmail.com",
-        "designation":"Intern",
-        "yearOfExp": "1",
-        "city":"Indore",
-        "state":"MP",
-        "country":"India",
-        "regNo":"1930053",
-        "branchOfStudy":"Computer Sci.",
-        "batch":"2018",
-        "passingYear":"2022"
+       companyName: alumniData.companyName,
+        companyAddress: alumniData.companyAddress,
+        companyEmail: alumniData.companyEmail,
+        designation: alumniData.designation,
+        yearOfExp: alumniData.yearOfExp,
+        city: alumniData.city,
+        state: alumniData.state,
+        country: alumniData.country,
+        regNo: alumniData.regNo,
+        branchOfStudy: alumniData.branchOfStudy,
+        batch: alumniData.batch,
+        passingYear: alumniData.passingYear,
         
       })
-    }).then(response=>{
-      return( response.json());
-
-      }).catch(err=>{
-          console.log(err);
-      });
+    }).then(response => {
+      response.json()
+    }).then(data=>{console.log(data)})
+    .catch(err => {
+      console.log(err);
+    });
   }
 
-  const submitted=()=>{
-    console.log('submiteed')
+  // const updateProfile = () => {
+  //   console.log(API)
+  //   fetch(`${API}/get-profile`, {
+  //     method: "GET",
+  //     headers: {
+  //       authorization:
+  //         `bearer ${isAuthenticated}`,
+  //       "Content-Type": "application/json",
+  //     },
+      // body: JSON.stringify({
+      //   companyName: alumniData.companyName,
+      //   companyAddress: alumniData.companyAddress,
+      //   companyEmail: alumniData.companyEmail,
+      //   designation: alumniData.designation,
+      //   yearOfExp: alumniData.yearOfExp,
+      //   city: alumniData.city,
+      //   state: alumniData.state,
+      //   country: alumniData.country,
+      //   regNo: alumniData.regNo,
+      //   branchOfStudy: alumniData.branchOfStudy,
+      //   batch: alumniData.batch,
+      //   passingYear: alumniData.passingYear,
+      // }),
+  //   })
+  //     .then((response) => {
+  //       console.log(response.json);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+
+  const submitted = () => {
+    console.log("submiteed");
     updateProfile();
-  }
+  };
 
-  const handleClose =()=>{
-    setOpen(false)
-  }
-  return(
-  <Card small className="mb-4 pt-3" style={{height:'60vh'}}>
-    <CardHeader className="border-bottom text-center" style={{height:'300px'}}>
-      <div className="mb-3 mx-auto">
-        <img
-          className="rounded-circle"
-          src={userDetails.avatar}
-          alt={userDetails.name}
-          width="110"
-        />
-      </div>
-      <h4 className="mb-0" style={{fontSize:'22px'}}>{userDetails.name}</h4>
-      <span className="text-muted d-block mb-2" style={{fontSize:'14px',fontWeight:'bold'}}>{userDetails.jobTitle}</span>
-      <br/>
-      <Button variant='outlined' onClick={()=>setOpen(true)} sx={{fontSize:'10px',mt:2}}>
-        Request Alumni
-      </Button>
+  const handleClose = () => {
+    setOpen(false);
+  };
+  return (
+    <Card small className="mb-4 pt-3" style={{ height: "60vh" }}>
+      <CardHeader
+        className="border-bottom text-center"
+        style={{ height: "300px" }}
+      >
+        <div className="mb-3 mx-auto">
+          <img
+            className="rounded-circle"
+            style={{ borderRadius: "50%", objectFit: "cover" }}
+            src={userDetails.avatar}
+            alt={userDetails.name}
+            width="160"
+            height="160"
+          />
+        </div>
+        <h4 className="mb-0" style={{ fontSize: "22px" }}>
+          {userDetails.name}
+        </h4>
+        <span
+          className="text-muted d-block mb-2"
+          style={{ fontSize: "14px", fontWeight: "bold" }}
+        >
+          {userDetails.jobTitle}
+        </span>
+        <br />
+        <Button
+          variant="outlined"
+          onClick={requestAlumni}
+          sx={{ fontSize: "10px", mt: 2 }}
+        >
+          {status}
+        </Button>
         <Modal
           open={open}
           onClose={handleClose}
@@ -108,188 +253,186 @@ const UserDetails = ({ userDetails }) => {
               Please Enter Your Details
             </Typography>
             <ListGroup flush>
-      <ListGroupItem className="p-3">
-        <Row>
-          <Col>
-            <Form>
-              <Row form>
-                {/* First Name */}
-                <Col md="6" className="form-group">
-                  <label htmlFor="companyName">Company Name</label>
-                  <FormInput
-                    id="companyName"
-                    placeholder="Company Name"
-                    value={''}
-                    onChange={handleChange}
-                  />
-                </Col>
-                {/* Last Name */}
-                <Col md="6" className="form-group">
-                  <label htmlFor="companyAddress">Company address</label>
-                  <FormInput
-                    type="address"
-                    
-                    id="companyAddress"
-                    placeholder="Company Address"
-                    value={''}
-                    onChange={handleChange}
-                    
-                  />
-                </Col>
-              </Row>
-              <Row form>
-                {/* Email */}
-                <Col md="12" className="form-group">
-                  <label htmlFor="companyEmail">Company Email</label>
-                  <FormInput
-                    type="email"
-                    id="companyEmail"
-                    placeholder="Company Email"
-                    value={''}
-                    onChange={handleChange}
-                    
-                  />
-                </Col>
-                {/* Password */}
-                
-              </Row>
-              <Row form>
-              <Col md="6" className="form-group">
-                  <label htmlFor="designation">Designation</label>
-                  <FormInput
-                    type="text"
-                    id="designation"
-                    
-                    
-                    placeholder="Designation"
-                    value={''}
-                    onChange={handleChange}
-                    
-                  />
-                </Col>
-                <Col md="6" className="form-group">
-                  <label htmlFor="exp">Year Of Exp</label>
-                  <FormInput
-                    type="number"
-                    id="exp"
-                    
-                    
-                    placeholder="Year Of Exp"
-                    value={''}
-                    onChange={handleChange}
-                    
-                  />
-                </Col>
-              </Row>
-              
-          
-              <Row form>
-                {/* City */}
-                <Col md="4" className="form-group">
-                  <label htmlFor="feCity">City</label>
-                  <FormInput
-                    id="feCity"
-                    placeholder="City"
-                    onChange={() => {}}
-                  />
-                </Col>
-                {/* State */}
-                <Col md="4" className="form-group">
-                  <label htmlFor="feInputState">State</label>
-                  <FormInput
-                    id="feCity"
-                    placeholder="State"
-                    onChange={() => {}}
-                  />
-                </Col>
-                {/* Zip Code */}
-                <Col md="4" className="form-group">
-                  <label htmlFor="feZipCode">Country</label>
-                  <FormInput
-                    id="feCity"
-                    placeholder="Country"
-                    
-                    onChange={() => {}}
-                  />
-                </Col>
-              </Row>
-              <Row form>
-                {/* First Name */}
-                <Col md="6" className="form-group">
-                  <label htmlFor="regNumber">Reg Number</label>
-                  <FormInput
-                    id="regNumber"
-                    placeholder="Reg Number"
-                    value={''}
-                    onChange={handleChange}
-                  />
-                </Col>
-                {/* Last Name */}
-                <Col md="6" className="form-group">
-                  <label htmlFor="branch">Branch Of Study</label>
-                  <FormInput
-                    
-                    
-                    id="branch"
-                    placeholder="Branch Of Study"
-                    value={''}
-                    onChange={handleChange}
-                    
-                  />
-                </Col>
-              </Row>
-              <Row form>
-                {/* First Name */}
-                <Col md="6" className="form-group">
-                  <label htmlFor="batch">Batch</label>
-                  <FormInput
-                    id="batch"
-                    type='number'
-                    maxLength='4'
-                    placeholder="Batch"
-                    value={''}
-                    onChange={handleChange}
-                  />
-                </Col>
-                {/* Last Name */}
-                <Col md="6" className="form-group">
-                  <label htmlFor="passingYear">Passing Year</label>
-                  <FormInput
-                    type="number"
-                    
-                    id="passingYear"
-                    placeholder="Passing Year"
-                    value={''}
-                    onChange={handleChange}
-                    
-                  />
-                </Col>
-              </Row>
-              <Button variant='contained' sx={{fontSize:'12px'}} onClick={submitted} >Request</Button>
-            </Form>
-          </Col>
-        </Row>
-      </ListGroupItem>
-    </ListGroup>
+              <ListGroupItem className="p-3">
+                <Row>
+                  <Col>
+                    <Form>
+                      <Row form>
+                        {/* First Name */}
+                        <Col md="6" className="form-group">
+                          <label htmlFor="companyName">Company Name</label>
+                          <FormInput
+                            id="companyName"
+                            placeholder="Company Name"
+                            value={alumniData.companyName}
+                            onChange={handleChange}
+                          />
+                        </Col>
+                        {/* Last Name */}
+                        <Col md="6" className="form-group">
+                          <label htmlFor="companyAddress">
+                            Company address
+                          </label>
+                          <FormInput
+                            type="address"
+                            id="companyAddress"
+                            placeholder="Company Address"
+                            value={alumniData.companyAddress}
+                            onChange={handleChange}
+                          />
+                        </Col>
+                      </Row>
+                      <Row form>
+                        {/* Email */}
+                        <Col md="12" className="form-group">
+                          <label htmlFor="companyEmail">Company Email</label>
+                          <FormInput
+                            type="email"
+                            id="companyEmail"
+                            placeholder="Company Email"
+                            value={alumniData.companyEmail}
+                            onChange={handleChange}
+                          />
+                        </Col>
+                        {/* Password */}
+                      </Row>
+                      <Row form>
+                        <Col md="6" className="form-group">
+                          <label htmlFor="designation">Designation</label>
+                          <FormInput
+                            type="text"
+                            id="designation"
+                            placeholder="Designation"
+                            value={alumniData.designation}
+                            onChange={handleChange}
+                          />
+                        </Col>
+                        <Col md="6" className="form-group">
+                          <label htmlFor="exp">Year Of Exp</label>
+                          <FormInput
+                            type="number"
+                            id="exp"
+                            placeholder="Year Of Exp"
+                            value={alumniData.yearOfExp}
+                            onChange={handleChange}
+                          />
+                        </Col>
+                      </Row>
+
+                      <Row form>
+                        {/* City */}
+                        <Col md="4" className="form-group">
+                          <label htmlFor="city">City</label>
+                          <FormInput
+                            id="city"
+                            placeholder="City"
+                            value={alumniData.city}
+                            onChange={handleChange}
+                          />
+                        </Col>
+                        {/* State */}
+                        <Col md="4" className="form-group">
+                          <label htmlFor="state">State</label>
+                          <FormInput
+                            id="state"
+                            placeholder="State"
+                            onChange={handleChange}
+                            value={alumniData.state}
+                          />
+                        </Col>
+                        {/* Zip Code */}
+                        <Col md="4" className="form-group">
+                          <label htmlFor="country">Country</label>
+                          <FormInput
+                            id="country"
+                            placeholder="Country"
+                            onChange={handleChange}
+                            value={alumniData.country}
+                          />
+                        </Col>
+                      </Row>
+                      <Row form>
+                        {/* First Name */}
+                        <Col md="6" className="form-group">
+                          <label htmlFor="regNo">Reg Number</label>
+                          <FormInput
+                            id="regNo"
+                            placeholder="Reg Number"
+                            value={alumniData.regNo}
+                            onChange={handleChange}
+                          />
+                        </Col>
+                        {/* Last Name */}
+                        <Col md="6" className="form-group">
+                          <label htmlFor="branchOfStudy">Branch Of Study</label>
+                          <FormInput
+                            id="branchOfStudy"
+                            placeholder="Branch Of Study"
+                            value={alumniData.branchOfStudy}
+                            onChange={handleChange}
+                          />
+                        </Col>
+                      </Row>
+                      <Row form>
+                        {/* First Name */}
+                        <Col md="6" className="form-group">
+                          <label htmlFor="batch">Batch</label>
+                          <FormInput
+                            id="batch"
+                            type="number"
+                            maxLength="4"
+                            placeholder="Batch"
+                            value={alumniData.batch}
+                            onChange={handleChange}
+                          />
+                        </Col>
+                        {/* Last Name */}
+                        <Col md="6" className="form-group">
+                          <label htmlFor="passingYear">Passing Year</label>
+                          <FormInput
+                            type="number"
+                            id="passingYear"
+                            placeholder="Passing Year"
+                            value={alumniData.passingYear}
+                            onChange={handleChange}
+                          />
+                        </Col>
+                      </Row>
+                      <Row form>
+                      <Button
+                        variant="contained"
+                        sx={{ fontSize: "12px" }}
+                        onClick={submitted}
+                      >
+                        {status}
+                      </Button>
+                      </Row>
+                      
+                    </Form>
+                  </Col>
+                </Row>
+              </ListGroupItem>
+            </ListGroup>
           </Box>
         </Modal>
-    </CardHeader>
-    <ListGroup flush>
-      <ListGroupItem className="p-4" style={{fontSize:'14px'}}>
-        <strong className="text-muted d-block mb-2">
-          {userDetails.metaTitle}
-        </strong>
-        <span>{userDetails.metaValue}</span>
-      </ListGroupItem>
-    </ListGroup>
-  </Card>
-)};
+      </CardHeader>
+      <ListGroup flush>
+        <ListGroupItem className="p-4" style={{ fontSize: "14px" }}>
+          <strong className="text-muted d-block mb-2">
+            {userDetails.metaTitle}
+          </strong>
+          <span>{userDetails.metaValue}</span>
+        </ListGroupItem>
+      </ListGroup>
+    </Card>
+  );
+};
 
 UserDetails.propTypes = {
   /**
    * The user details object.
    */
-  userDetails: PropTypes.object
+  userDetails: PropTypes.object,
 };
 
 UserDetails.defaultProps = {
@@ -301,8 +444,8 @@ UserDetails.defaultProps = {
     performanceReportValue: 74,
     metaTitle: "Description",
     metaValue:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio eaque, quidem, commodi soluta qui quae minima obcaecati quod dolorum sint alias, possimus illum assumenda eligendi cumque?"
-  }
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio eaque, quidem, commodi soluta qui quae minima obcaecati quod dolorum sint alias, possimus illum assumenda eligendi cumque?",
+  },
 };
 
 export default UserDetails;

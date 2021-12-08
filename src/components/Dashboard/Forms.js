@@ -1,8 +1,10 @@
 import React from "react";
 import { useEffect, useState } from 'react';
 import { useRef } from "react";
-import {API} from '../../backend'
+import { API } from '../../backend'
+import { isAuthenticated } from '../../auth/helper'
 import PropTypes from "prop-types";
+
 import {
   Card,
   CardHeader,
@@ -19,65 +21,72 @@ import {
 import Button from '@mui/material/Button';
 
 
- 
+
 export const Forms = () => {
-  const [user,setUser]= useState({
-    name:"",
+  const [user, setUser] = useState({
+    name: "",
     dob: "",
-    email:'',
+    email: '',
     phoneNumber: "",
     regNo: "",
     branchOfStudy: "",
     collegeName: "",
     yearOfStudy: "",
-    image:'',
+    image: '',
     address: "",
     socialmedia: {
-        facebook: "",
-        instagram: "",
-        linkedin: "",
+      facebook: "",
+      instagram: "",
+      linkedin: "",
     }
   });
 
-  const [err,setErr] = useState("");
-  const [isErr,setIsErr] = useState(false);
-  const [errAt,setErrAt] = useState("");
+  const [err, setErr] = useState("");
+  const [isErr, setIsErr] = useState(false);
+  const [errAt, setErrAt] = useState("");
 
-    const handleChange = (event) => {
+  const handleChange = (event) => {
     if ((event.target.id === "firstName")) {
-      setUser({ ...user, name: event.target.value});
+      setUser({ ...user, name: event.target.value });
       console.log(event.target.value)
-    }else if(event.target.id ==='dob'){
-      setUser({ ...user, dob: event.target.value});
+    } else if (event.target.id === 'dob') {
+      setUser({ ...user, dob: event.target.value });
     }
-    else if((event.target.id) ==='address'){
+    else if ((event.target.id) === 'address') {
       console.log(event.target.value)
-      setUser({ ...user, address: event.target.value});
+      setUser({ ...user, address: event.target.value });
+    }else if(event.target.id === 'facebook'){
+      // setUser({...user.socialmedia,...{
+      //   facebook:event.target.value
+      // }})
+      console.log(user)
     }
 
   };
 
   useEffect(() => {
-    
+
     fetch(`${API}/get-profile`, {
-      method:'GET',
+      method: 'GET',
       headers: {
         authorization:
-          "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWExMThkYjM2NGU0NTc2NWZmMTJlYzkiLCJyb2xlIjowLCJpYXQiOjE2Mzc5NDc3NTV9.QfXnMTrdoi3XQX2v2rdACXgBC5AKaDXdLDwqqCU7Nnc",
+          `bearer ${isAuthenticated()}`,
         "Content-Type": "application/json",
       },
     })
       .then((data) => data.json())
-      .then((result) => setUser(result));
+      .then((result) => {setUser({...user ,...result});
+        console.log({...user ,...result});
+        }).then(console.log(user));
   }, []);
 
-    const updateProfile=()=>{
-    
-    return fetch(`${API}/profile-update`,{
-      method:'POST',
+  const updateProfile = () => {
+
+    return fetch(`${API}/profile-update`, {
+      method: 'POST',
       headers: {
         authorization:
-          "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWExMThkYjM2NGU0NTc2NWZmMTJlYzkiLCJyb2xlIjowLCJpYXQiOjE2Mzc5NDc3NTV9.QfXnMTrdoi3XQX2v2rdACXgBC5AKaDXdLDwqqCU7Nnc",
+          `bearer ${isAuthenticated()}`,
         "Content-Type": "application/json",
       },
       body:JSON.stringify({
@@ -86,40 +95,40 @@ export const Forms = () => {
         "address":user.address,
         "collegeName":"SLIET",
         "socialmedia":{
-                "facebook":"Rucika",
-                "instagram":"Ruchika",
-                "linkedin":"Ruchika"
+                "facebook":user.socialmedia.facebook,
+                "instagram":user.socialmedia.instagram,
+                "linkedin":user.socialmedia.linkedin
                 },
         "profileImage":user.profileImage
         
       })
-    }).then(response=>{
-      return( response.json());
+    }).then(response => {
+      return (response.json());
 
-      }).catch(err=>{
-          console.log(err);
-      });
+    }).catch(err => {
+      console.log(err);
+    });
   }
 
 
-    // const [value, setValue] = React.useState("Controlled");
-  
+  // const [value, setValue] = React.useState("Controlled");
+
   // const [category, setCategory] = React.useState("EUR");
-  
+
 
   const phoneNumber = useRef(null);
   const email = useRef(null);
-    const submitted = () => {
-    
+  const submitted = () => {
+
     const reEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-    const rePhoneNumber =/^((\+*)((0[ -]*)*|((91 )*))((\d{12})+|(\d{10})+))|\d{5}([- ]*)\d{6}$/i;
+    const rePhoneNumber = /^((\+*)((0[ -]*)*|((91 )*))((\d{12})+|(\d{10})+))|\d{5}([- ]*)\d{6}$/i;
 
     console.log(phoneNumber.current.value)
-    if(rePhoneNumber.test(phoneNumber.current.value)){
-      setUser({ ...user, phoneNumber: phoneNumber.current.value});  
+    if (rePhoneNumber.test(phoneNumber.current.value)) {
+      setUser({ ...user, phoneNumber: phoneNumber.current.value });
     }
-    
-    
+
+
     // if (!reEmail.test(email.current.value)) {
     //   // 
     //   console.log("Invalid email");
@@ -146,9 +155,9 @@ export const Forms = () => {
     //   setErr('Please upload image')
     // }
     // else{
-      
+
     // }
-    updateProfile().then(response=>console.log(response));
+    updateProfile().then(response => console.log(response));
   }
   return(
   <Card small className="mb-4">
@@ -163,7 +172,7 @@ export const Forms = () => {
               <Row form>
                 {/* First Name */}
                 <Col md="6" className="form-group">
-                  <label htmlFor="firstName">First Name</label>
+                  <label htmlFor="firstName">Name</label>
                   <FormInput
                     id="firstName"
                     placeholder="First Name"
@@ -193,7 +202,7 @@ export const Forms = () => {
                     type="date"
                     id="dob"
                     placeholder="Date Of Birth"
-                    value={user.dob}
+                    value={user.dob.split('T')[0]}
                     onChange={handleChange}
                     
                   />
@@ -221,7 +230,7 @@ export const Forms = () => {
                     id="address"
                     placeholder="Address"
                     value={user.address}
-                    onChange={() => {}}
+                    onChange={handleChange}
                     
                   />
                 </Col>
@@ -230,30 +239,32 @@ export const Forms = () => {
               <Row form>
                 {/* City */}
                 <Col md="4" className="form-group">
-                  <label htmlFor="feCity">LinkedIn</label>
+                  <label htmlFor="linkedin">LinkedIn</label>
                   <FormInput
-                    id="feCity"
+                    id="linkedin"
                     placeholder="LinkedIn"
-                    onChange={() => {}}
+                    value={user.socialmedia.linkedin}
+                    onChange={handleChange}
                   />
                 </Col>
                 {/* State */}
                 <Col md="4" className="form-group">
-                  <label htmlFor="feInputState">Facebook</label>
+                  <label htmlFor="facebook">Facebook</label>
                   <FormInput
-                    id="feCity"
+                    id="facebook"
                     placeholder="Facebook"
-                    onChange={() => {}}
+                    value={user.socialmedia.facebook}
+                    onChange={handleChange}
                   />
                 </Col>
                 {/* Zip Code */}
                 <Col md="4" className="form-group">
-                  <label htmlFor="feZipCode">Instagram</label>
+                  <label htmlFor="instagram">Instagram</label>
                   <FormInput
-                    id="feCity"
+                    id="instagram"
                     placeholder="Instagram"
-                    
-                    onChange={() => {}}
+                    value={user.socialmedia.instagram}
+                    onChange={handleChange}
                   />
                 </Col>
               </Row>
@@ -309,7 +320,7 @@ Forms.defaultProps = {
 
 
 
-  
+
 
 
 //   const handleChange = (event) => {
@@ -359,7 +370,7 @@ Forms.defaultProps = {
 //         linkedin: "",
 //     }
 //   });
-  
+
 
 //   return (
 //     <Box
@@ -383,7 +394,7 @@ Forms.defaultProps = {
 //           // onChange = {handleInputs}
 //             onChange={handleChange}
 //         />
-        
+
 //         <TextField
 //           id="email"
 //           label="Email"
@@ -407,15 +418,15 @@ Forms.defaultProps = {
 //           helperText={isErr ? "Invalid Phone Number" : "Phone Number"}
 //           type="text"
 //           inputRef={phoneNumber}
-          
-          
+
+
 //           // value= {mobileNumber}
 //         />
 //         <TextField
 //           id="address"
 //           label="Address"
 //           type="text"
-          
+
 //           multiline
 //           required
 //           maxRows={2}
@@ -505,7 +516,7 @@ Forms.defaultProps = {
 //         >
 //         Submit
 //       </Button>
-     
+
 //     </Box>
 //   );
 
