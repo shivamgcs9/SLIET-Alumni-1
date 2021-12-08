@@ -191,7 +191,6 @@ const Students = () => {
       ...filters,
       [key]: value
     })
-    filledData()
   };
   //==========
 
@@ -284,10 +283,12 @@ const Students = () => {
                     <Option value="Shimla">Shimla</Option>
                   </Select>
                 </FilterItem>
+
+                <Button onClick={() => filledData()}>Apply</Button>
               </>
             )}
-            <Button onClick={() => setOpen(!open)}>Apply</Button>
           </Filter>
+
           <MobileFilter>
             <FilterItem>
               <Span onClick={() => setOpen(!open)}>Filters:</Span>
