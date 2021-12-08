@@ -1,8 +1,19 @@
 // import logo from '../../public/img/testimonials/logo.png';
-
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
+import { isAuthenticated, signout } from "../../auth/helper";
 export const Navigation = (props) => {
+  const [loggedIn, setLoggedIn] = useState(isAuthenticated());
+
+  useEffect(() => {
+    setLoggedIn(isAuthenticated());
+  });
+
+
+  // const isLoggedIn = ()=>{
+
+  // }
+
   return (
     <nav id="menu" className="navbar navbar-default navbar-fixed-top">
       {/* <div>
@@ -56,16 +67,18 @@ export const Navigation = (props) => {
                 Team
               </a> */}
               <Link to="/team" className="page-scroll">
-                Teams
+                Alumni
               </Link>
             </li>
             <li>
               {/* <a href='#services' className='page-scroll'>
                 Alumni
               </a> */}
-              <Link to="/dashboard" className="page-scroll">
-                Dashboard
-              </Link>
+              {loggedIn && (
+                <Link to="/dashboard" className="page-scroll">
+                  Dashboard
+                </Link>
+              )}
             </li>
             <li>
               <a href="/#contact" className="page-scroll">
@@ -82,9 +95,21 @@ export const Navigation = (props) => {
               {/* <a href='#register' className='page-scroll'>
                 REGISTER
               </a> */}
-              <Link to="/register" className="page-scroll">
-                Register
-              </Link>
+              {loggedIn ? (
+                <Link
+                  to="/"
+                  className="page-scroll"
+                  onClick={() => {
+                    signout();
+                  }}
+                >
+                  Log Out
+                </Link>
+              ) : (
+                <Link to="/register" className="page-scroll">
+                  Login/Register
+                </Link>
+              )}
             </li>
           </ul>
         </div>

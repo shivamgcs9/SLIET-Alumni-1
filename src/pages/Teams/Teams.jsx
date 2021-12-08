@@ -1,4 +1,7 @@
-// import { FaSearch } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import { Link, Redirect } from "react-router-dom";
+import { isAuthenticated } from "../../auth/helper";
 import styled from "styled-components";
 import Filter from "../../components/Team/Filters/Filters";
 import Students from "../../components/Team/students/Students";
@@ -14,13 +17,22 @@ const Container = styled.div`
 `;
 
 const Teams = () => {
+  const [loggedIn, setLoggedIn] = useState(isAuthenticated());
+
+  useEffect(() => {
+    setLoggedIn(isAuthenticated());
+  });
   return (
+
     <>
+    {loggedIn ?<>
       <Navigation />
       <Container>
         {/* <Filter /> */}
         <Students />
       </Container>
+    </> : <Redirect to="/register" /> }
+      
     </>
   );
 };

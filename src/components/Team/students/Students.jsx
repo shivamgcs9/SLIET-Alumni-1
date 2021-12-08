@@ -82,48 +82,42 @@ const Students = () => {
   let [pageCount, setPageCount] = useState(1);
   let [currentPage, setCurrentPage] = useState(0);
   let [isLoaded, setisLoaded] = useState(false);
-
+  const [open, setOpen] = useState(false);
+  let [filters, setFilter] = useState({});
   //==========
 
-  const [open, setOpen] = useState(false);
-  const [filters, setFilters] = useState({});
-
-  const handleFilters = (e) => {
+  const handleFilters = (e, key) => {
     e.preventDefault();
     const value = e.target.value;
-    setFilters({
+    setFilter({
       ...filters,
-      [e.target.name]: value,
+      [key]: value,
     });
-    console.log(filters);
-    console.log(value);
   };
   //==========
 
   const filledData = () => {
-    console.log(currentPage === 0);
-    let payload = {
-      page: currentPage,
-      limit: 10,
-    };
-
     fetch(`${API}/get-alumni`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(filters),
     })
       .then((res) => {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
-        setUsers(data.data);
-        setPageCount(data.totalPages);
-        setCurrentPage(data.page);
-        setisLoaded(true);
+        if (data.data) {
+          setUsers(data.data);
+          setPageCount(data.totalPages);
+          setCurrentPage(data.page);
+          setisLoaded(true);
+        } else {
+          setUsers([]);
+          setisLoaded(false);
+        }
       });
   };
 
@@ -157,13 +151,13 @@ const Students = () => {
           <Filter>
             <FilterItem>
               <Span onClick={() => setOpen(!open)}>Filters:</Span>
-              <Span onClick={() => setFilters(filters)}>Clear</Span>
+              <Span>Clear</Span>
             </FilterItem>
 
             {open && (
               <>
                 <FilterItem>
-                  <Select onChange={handleFilters}>
+                  <Select onChange={(e) => handleFilters(e, "branchOfStudy")}>
                     <Option defaultValue>course</Option>
                     <Option>Computer Science</Option>
                     <Option>Mechanical Engineering</Option>
@@ -172,7 +166,11 @@ const Students = () => {
                   </Select>
                 </FilterItem>
                 <FilterItem className="filterItem">
-                  <Select name="" id="" onChange={handleFilters}>
+                  <Select
+                    name=""
+                    id=""
+                    onChange={(e) => handleFilters(e, "passingYear")}
+                  >
                     <Option defaultValue>Passing Year</Option>
                     <Option value="2018">2018</Option>
                     <Option value="2019">2019</Option>
@@ -182,7 +180,11 @@ const Students = () => {
                   </Select>
                 </FilterItem>
                 <FilterItem>
-                  <Select name="" id="" onChange={handleFilters}>
+                  <Select
+                    name=""
+                    id=""
+                    onChange={(e) => handleFilters(e, "location")}
+                  >
                     <Option defaultValue>Location</Option>
                     <Option value="Uttrakhand">Uttrakhand</Option>
                     <Option value="Punjab">Punjab</Option>
@@ -196,7 +198,7 @@ const Students = () => {
             )}
           </Filter>
         </ContainerFill>
-        <Container>{displayUsers}</Container>
+        {users.length ? <Container>{displayUsers}</Container> : <></>}
         {isLoaded ? (
           <ReactPaginate
             previousLabel={"Previous"}
