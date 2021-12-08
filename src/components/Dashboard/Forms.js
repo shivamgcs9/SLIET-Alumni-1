@@ -59,8 +59,8 @@ export const Forms = () => {
 
   useEffect(() => {
     
-    fetch(`${API}/profile-update`, {
-      method:'POST',
+    fetch(`${API}/get-profile`, {
+      method:'GET',
       headers: {
         authorization:
           "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWExMThkYjM2NGU0NTc2NWZmMTJlYzkiLCJyb2xlIjowLCJpYXQiOjE2Mzc5NDc3NTV9.QfXnMTrdoi3XQX2v2rdACXgBC5AKaDXdLDwqqCU7Nnc",
