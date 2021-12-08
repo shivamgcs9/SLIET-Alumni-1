@@ -55,15 +55,15 @@ export const Forms = () => {
     else if ((event.target.id) === 'address') {
       console.log(event.target.value)
       setUser({ ...user, address: event.target.value });
-    }else if(event.target.id === 'facebook'){
-      // setUser({...user.socialmedia,...{
-      //   facebook:event.target.value
-      // }})
-      console.log(user)
-    }else if(event.target.id == 'phoneNumber'){
+    } else if (event.target.id === 'facebook') {
+      setUser({ ...user, ...{ socialmedia: { facebook: event.target.value } } });
+    } else if (event.target.id == 'linkedin') {
+      setUser({ ...user, ...{ socialmedia: { linkedin: event.target.value } } });
+    } else if (event.target.id == 'instagram') {
+      setUser({ ...user, ...{ socialmedia: { instagram: event.target.value } } });
+    } else if (event.target.id == 'phoneNumber') {
       setUser({ ...user, phoneNumber: event.target.value });
     }
-
   };
 
   useEffect(() => {
@@ -77,9 +77,10 @@ export const Forms = () => {
       },
     })
       .then((data) => data.json())
-      .then((result) => {setUser({...user ,...result});
-        console.log({...user ,...result});
-        }).then(console.log(user));
+      .then((result) => {
+        setUser({ ...user, ...result });
+        console.log({ ...user, ...result });
+      }).then(console.log(user));
   }, []);
 
   const updateProfile = () => {
@@ -91,18 +92,18 @@ export const Forms = () => {
           `bearer ${isAuthenticated()}`,
         "Content-Type": "application/json",
       },
-      body:JSON.stringify({
-        "dob":user.dob,
-        "phoneNumber":user.phoneNumber,
-        "address":user.address,
-        "collegeName":"SLIET",
-        "socialmedia":{
-                "facebook":user.socialmedia.facebook,
-                "instagram":user.socialmedia.instagram,
-                "linkedin":user.socialmedia.linkedin
-                },
-        "profileImage":user.profileImage
-        
+      body: JSON.stringify({
+        "dob": user.dob,
+        "phoneNumber": user.phoneNumber,
+        "address": user.address,
+        "collegeName": "SLIET",
+        "socialmedia": {
+          "facebook": user.socialmedia.facebook,
+          "instagram": user.socialmedia.instagram,
+          "linkedin": user.socialmedia.linkedin
+        },
+        "profileImage": user.profileImage
+
       })
     }).then(response => {
       return (response.json());
@@ -161,130 +162,131 @@ export const Forms = () => {
     // }
     updateProfile().then(response => console.log(response));
   }
-  return(
-  <Card small className="mb-4">
-    <CardHeader className="border-bottom">
-      <h6 className="m-0">{'HASTA LA VISTA BABY'}</h6>
-    </CardHeader>
-    <ListGroup flush>
-      <ListGroupItem className="p-3">
-        <Row>
-          <Col>
-            <Form>
-              <Row form>
-                {/* First Name */}
-                <Col md="6" className="form-group">
-                  <label htmlFor="firstName">Name</label>
-                  <FormInput
-                    id="firstName"
-                    placeholder="First Name"
-                    value={user.name}
-                    onChange={handleChange}
-                  />
-                </Col>
-                {/* Last Name */}
-                <Col md="6" className="form-group">
-                  <label htmlFor="email">Email</label>
-                  <FormInput
-                    type="email"
-                    innerRef={email}
-                    id="email"
-                    placeholder="Email Address"
-                    value={user.email}
-                    onChange={handleChange}
-                    
-                  />
-                </Col>
-              </Row>
-              <Row form>
-                {/* Email */}
-                <Col md="6" className="form-group">
-                  <label htmlFor="dob">Date Of Birth</label>
-                  <FormInput
-                    type="date"
-                    id="dob"
-                    placeholder="Date Of Birth"
-                    value={user.dob.split('T')[0]}
-                    onChange={handleChange}
-                    
-                  />
-                </Col>
-                {/* Password */}
-                <Col md="6" className="form-group">
-                  <label htmlFor="phoneNumber">Contact Number</label>
-                  <FormInput
-                    type="text"
-                    id="phoneNumber"
-                    
-                    innerRef={phoneNumber}
-                    placeholder="Contact Number"
-                    value={user.phoneNumber}
-                    onChange={handleChange}
-                    maxLength='13'
-                  />
-                </Col>
-              </Row>
-              <Row form>
-              <Col md="12" className="form-group">
-                  <label htmlFor="address">Address</label>
-                  <FormInput
-                    type="text"
-                    id="address"
-                    placeholder="Address"
-                    value={user.address}
-                    onChange={handleChange}
-                    
-                  />
-                </Col>
-              </Row>
-          
-              <Row form>
-                {/* City */}
-                <Col md="4" className="form-group">
-                  <label htmlFor="linkedin">LinkedIn</label>
-                  <FormInput
-                    id="linkedin"
-                    placeholder="LinkedIn"
-                    value={user.socialmedia.linkedin}
-                    onChange={handleChange}
-                  />
-                </Col>
-                {/* State */}
-                <Col md="4" className="form-group">
-                  <label htmlFor="facebook">Facebook</label>
-                  <FormInput
-                    id="facebook"
-                    placeholder="Facebook"
-                    value={user.socialmedia.facebook}
-                    onChange={handleChange}
-                  />
-                </Col>
-                {/* Zip Code */}
-                <Col md="4" className="form-group">
-                  <label htmlFor="instagram">Instagram</label>
-                  <FormInput
-                    id="instagram"
-                    placeholder="Instagram"
-                    value={user.socialmedia.instagram}
-                    onChange={handleChange}
-                  />
-                </Col>
-              </Row>
-              <Row form>
-                {/* Description */}
-                <Col md="12" className="form-group">
-                  <label htmlFor="feDescription">Comment</label>
-                  <FormTextarea id="feDescription" rows="5" />
-                </Col>
-              </Row>
-              <Button variant='contained' sx={{fontSize:'12px'}} onClick={submitted} >Update Account</Button>
-            </Form>
-          </Col>
-        </Row>
-      </ListGroupItem>
-    </ListGroup>
-  </Card>
-  )};
+  return (
+    <Card small className="mb-4">
+      <CardHeader className="border-bottom">
+        <h6 className="m-0">{'HASTA LA VISTA BABY'}</h6>
+      </CardHeader>
+      <ListGroup flush>
+        <ListGroupItem className="p-3">
+          <Row>
+            <Col>
+              <Form>
+                <Row form>
+                  {/* First Name */}
+                  <Col md="6" className="form-group">
+                    <label htmlFor="firstName">Name</label>
+                    <FormInput
+                      id="firstName"
+                      placeholder="First Name"
+                      value={user.name}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                  {/* Last Name */}
+                  <Col md="6" className="form-group">
+                    <label htmlFor="email">Email</label>
+                    <FormInput
+                      type="email"
+                      innerRef={email}
+                      id="email"
+                      placeholder="Email Address"
+                      value={user.email}
+                      onChange={handleChange}
+
+                    />
+                  </Col>
+                </Row>
+                <Row form>
+                  {/* Email */}
+                  <Col md="6" className="form-group">
+                    <label htmlFor="dob">Date Of Birth</label>
+                    <FormInput
+                      type="date"
+                      id="dob"
+                      placeholder="Date Of Birth"
+                      value={user.dob.split('T')[0]}
+                      onChange={handleChange}
+
+                    />
+                  </Col>
+                  {/* Password */}
+                  <Col md="6" className="form-group">
+                    <label htmlFor="phoneNumber">Contact Number</label>
+                    <FormInput
+                      type="text"
+                      id="phoneNumber"
+
+                      innerRef={phoneNumber}
+                      placeholder="Contact Number"
+                      value={user.phoneNumber}
+                      onChange={handleChange}
+                      maxLength='13'
+                    />
+                  </Col>
+                </Row>
+                <Row form>
+                  <Col md="12" className="form-group">
+                    <label htmlFor="address">Address</label>
+                    <FormInput
+                      type="text"
+                      id="address"
+                      placeholder="Address"
+                      value={user.address}
+                      onChange={handleChange}
+
+                    />
+                  </Col>
+                </Row>
+
+                <Row form>
+                  {/* City */}
+                  <Col md="4" className="form-group">
+                    <label htmlFor="linkedin">LinkedIn</label>
+                    <FormInput
+                      id="linkedin"
+                      placeholder="LinkedIn"
+                      value={user.socialmedia.linkedin}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                  {/* State */}
+                  <Col md="4" className="form-group">
+                    <label htmlFor="facebook">Facebook</label>
+                    <FormInput
+                      id="facebook"
+                      placeholder="Facebook"
+                      value={user.socialmedia.facebook}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                  {/* Zip Code */}
+                  <Col md="4" className="form-group">
+                    <label htmlFor="instagram">Instagram</label>
+                    <FormInput
+                      id="instagram"
+                      placeholder="Instagram"
+                      value={user.socialmedia.instagram}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Row>
+                <Row form>
+                  {/* Description */}
+                  <Col md="12" className="form-group">
+                    <label htmlFor="feDescription">Comment</label>
+                    <FormTextarea id="feDescription" rows="5" />
+                  </Col>
+                </Row>
+                <Button variant='contained' sx={{ fontSize: '12px' }} onClick={submitted} >Update Account</Button>
+              </Form>
+            </Col>
+          </Row>
+        </ListGroupItem>
+      </ListGroup>
+    </Card>
+  )
+};
 
 Forms.propTypes = {
   /**
