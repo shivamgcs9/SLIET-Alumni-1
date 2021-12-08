@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -20,6 +20,7 @@ import {
 } from "shards-react";
 
 import avatar from "../../assets/avatarImage.jpg";
+import { isAuthenticated } from "../../auth/helper";
 
 const UserDetails = ({ userDetails }) => {
   const [open, setOpen] = useState(false);
@@ -36,40 +37,169 @@ const UserDetails = ({ userDetails }) => {
     p: 4,
   };
 
-  const handleChange = () => {
-    console.log("changed");
+  const handleChange = (event) => {
+    switch(event.target.id){
+      case 'companyName':
+        setAlumniData({...alumniData,companyName:event.target.value})
+        break;
+      case 'companyAddress':
+        setAlumniData({...alumniData,companyAddress:event.target.value})
+        break;
+      case 'companyEmail':
+        setAlumniData({...alumniData,companyEmail:event.target.value})
+        break;
+      case 'country':
+        setAlumniData({...alumniData,country:event.target.value})
+        break;
+      case 'designation':
+        setAlumniData({...alumniData,designation:event.target.value})
+        break;
+      case 'yearOfExp':
+        setAlumniData({...alumniData,yearofExp:event.target.value})
+        break;
+      case 'batch':
+        setAlumniData({...alumniData,batch:event.target.value})
+        break;
+      case 'branchOfStudy':
+        setAlumniData({...alumniData,branchOfStudy:event.target.value})
+        break;
+      case 'city':
+        setAlumniData({...alumniData,city:event.target.value})
+        break;
+      case 'state':
+        setAlumniData({...alumniData,state:event.target.value})
+        break;
+      case 'regNo':
+        setAlumniData({...alumniData,regNo:event.target.value})
+        break;
+      case 'passingYear':
+        setAlumniData({...alumniData,passingYear:event.target.value})
+        break;
+    }
   };
 
-  const updateProfile = () => {
-    return fetch(`${API}/request-alumni`, {
-      method: "POST",
+  const [alumniData,setAlumniData] = useState({
+    batch: '',
+    branchOfStudy: "",
+    city: "",
+    companyAddress: "",
+    companyEmail: "",
+    companyName: "",
+    country: "",
+    designation: "",
+    passingYear: '',
+    regNo: "",
+    state: "",
+    userId: "",
+    yearOfExp: "",
+  });
+
+  const [status,setStatus]=useState('Request Alumni')
+
+  const requestAlumni=()=>{
+    setOpen(true)
+
+    fetch(`${API}/get-profile`,{
+      method:'GET',
+      headers:{
+        authorization:
+        `bearer ${isAuthenticated()}`,
+        "Content-Type": "application/json",
+      }
+    })
+    .then((data)=>data.json())
+    .then((result)=>{
+      if(result.alumniId)
+      {
+        setAlumniData(result.alumniId)
+        setStatus('Update Alumni Data')
+      }
+      else{
+        setStatus('RequestAlumni')
+      }
+    })
+  }
+  useEffect(() => {
+
+    fetch(`${API}/get-profile`, {
+      method: 'GET',
       headers: {
         authorization:
-          "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWExMThkYjM2NGU0NTc2NWZmMTJlYzkiLCJyb2xlIjowLCJpYXQiOjE2Mzc5NDc3NTV9.QfXnMTrdoi3XQX2v2rdACXgBC5AKaDXdLDwqqCU7Nnc",
+          `bearer ${isAuthenticated()}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        companyName: "BugsMirror",
-        companyAddress: "Indore",
-        companyEmail: "BugsMirror@gmail.com",
-        designation: "Intern",
-        yearOfExp: "1",
-        city: "Indore",
-        state: "MP",
-        country: "India",
-        regNo: "1930053",
-        branchOfStudy: "Computer Sci.",
-        batch: "2018",
-        passingYear: "2022",
-      }),
     })
-      .then((response) => {
-        return response.json();
-      })
-      .catch((err) => {
-        console.log(err);
+      .then((data) => data.json())
+      .then((result) => {
+        if(result.alumniId){
+          setStatus('Update Alumni Data')
+        }  
       });
-  };
+  }, []);
+
+  const updateProfile = () => {
+
+    fetch(`${API}/alumni-update`, {
+      method: 'POST',
+      headers: {
+        authorization:
+          `bearer ${isAuthenticated()}`,
+        "Content-Type": "application/json",
+      },
+      body:JSON.stringify({
+       companyName: alumniData.companyName,
+        companyAddress: alumniData.companyAddress,
+        companyEmail: alumniData.companyEmail,
+        designation: alumniData.designation,
+        yearOfExp: alumniData.yearOfExp,
+        city: alumniData.city,
+        state: alumniData.state,
+        country: alumniData.country,
+        regNo: alumniData.regNo,
+        branchOfStudy: alumniData.branchOfStudy,
+        batch: alumniData.batch,
+        passingYear: alumniData.passingYear,
+        
+      })
+    }).then(response => {
+      response.json()
+    }).then(data=>{console.log(data)})
+    .catch(err => {
+      console.log(err);
+    });
+  }
+
+  // const updateProfile = () => {
+  //   console.log(API)
+  //   fetch(`${API}/get-profile`, {
+  //     method: "GET",
+  //     headers: {
+  //       authorization:
+  //         `bearer ${isAuthenticated}`,
+  //       "Content-Type": "application/json",
+  //     },
+      // body: JSON.stringify({
+      //   companyName: alumniData.companyName,
+      //   companyAddress: alumniData.companyAddress,
+      //   companyEmail: alumniData.companyEmail,
+      //   designation: alumniData.designation,
+      //   yearOfExp: alumniData.yearOfExp,
+      //   city: alumniData.city,
+      //   state: alumniData.state,
+      //   country: alumniData.country,
+      //   regNo: alumniData.regNo,
+      //   branchOfStudy: alumniData.branchOfStudy,
+      //   batch: alumniData.batch,
+      //   passingYear: alumniData.passingYear,
+      // }),
+  //   })
+  //     .then((response) => {
+  //       console.log(response.json);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   const submitted = () => {
     console.log("submiteed");
@@ -107,10 +237,10 @@ const UserDetails = ({ userDetails }) => {
         <br />
         <Button
           variant="outlined"
-          onClick={() => setOpen(true)}
+          onClick={requestAlumni}
           sx={{ fontSize: "10px", mt: 2 }}
         >
-          Request Alumni
+          {status}
         </Button>
         <Modal
           open={open}
@@ -134,7 +264,7 @@ const UserDetails = ({ userDetails }) => {
                           <FormInput
                             id="companyName"
                             placeholder="Company Name"
-                            value={""}
+                            value={alumniData.companyName}
                             onChange={handleChange}
                           />
                         </Col>
@@ -147,7 +277,7 @@ const UserDetails = ({ userDetails }) => {
                             type="address"
                             id="companyAddress"
                             placeholder="Company Address"
-                            value={""}
+                            value={alumniData.companyAddress}
                             onChange={handleChange}
                           />
                         </Col>
@@ -160,7 +290,7 @@ const UserDetails = ({ userDetails }) => {
                             type="email"
                             id="companyEmail"
                             placeholder="Company Email"
-                            value={""}
+                            value={alumniData.companyEmail}
                             onChange={handleChange}
                           />
                         </Col>
@@ -173,7 +303,7 @@ const UserDetails = ({ userDetails }) => {
                             type="text"
                             id="designation"
                             placeholder="Designation"
-                            value={""}
+                            value={alumniData.designation}
                             onChange={handleChange}
                           />
                         </Col>
@@ -183,7 +313,7 @@ const UserDetails = ({ userDetails }) => {
                             type="number"
                             id="exp"
                             placeholder="Year Of Exp"
-                            value={""}
+                            value={alumniData.yearOfExp}
                             onChange={handleChange}
                           />
                         </Col>
@@ -192,50 +322,53 @@ const UserDetails = ({ userDetails }) => {
                       <Row form>
                         {/* City */}
                         <Col md="4" className="form-group">
-                          <label htmlFor="feCity">City</label>
+                          <label htmlFor="city">City</label>
                           <FormInput
-                            id="feCity"
+                            id="city"
                             placeholder="City"
-                            onChange={() => {}}
+                            value={alumniData.city}
+                            onChange={handleChange}
                           />
                         </Col>
                         {/* State */}
                         <Col md="4" className="form-group">
-                          <label htmlFor="feInputState">State</label>
+                          <label htmlFor="state">State</label>
                           <FormInput
-                            id="feCity"
+                            id="state"
                             placeholder="State"
-                            onChange={() => {}}
+                            onChange={handleChange}
+                            value={alumniData.state}
                           />
                         </Col>
                         {/* Zip Code */}
                         <Col md="4" className="form-group">
-                          <label htmlFor="feZipCode">Country</label>
+                          <label htmlFor="country">Country</label>
                           <FormInput
-                            id="feCity"
+                            id="country"
                             placeholder="Country"
-                            onChange={() => {}}
+                            onChange={handleChange}
+                            value={alumniData.country}
                           />
                         </Col>
                       </Row>
                       <Row form>
                         {/* First Name */}
                         <Col md="6" className="form-group">
-                          <label htmlFor="regNumber">Reg Number</label>
+                          <label htmlFor="regNo">Reg Number</label>
                           <FormInput
-                            id="regNumber"
+                            id="regNo"
                             placeholder="Reg Number"
-                            value={""}
+                            value={alumniData.regNo}
                             onChange={handleChange}
                           />
                         </Col>
                         {/* Last Name */}
                         <Col md="6" className="form-group">
-                          <label htmlFor="branch">Branch Of Study</label>
+                          <label htmlFor="branchOfStudy">Branch Of Study</label>
                           <FormInput
-                            id="branch"
+                            id="branchOfStudy"
                             placeholder="Branch Of Study"
-                            value={""}
+                            value={alumniData.branchOfStudy}
                             onChange={handleChange}
                           />
                         </Col>
@@ -249,7 +382,7 @@ const UserDetails = ({ userDetails }) => {
                             type="number"
                             maxLength="4"
                             placeholder="Batch"
-                            value={""}
+                            value={alumniData.batch}
                             onChange={handleChange}
                           />
                         </Col>
@@ -260,18 +393,21 @@ const UserDetails = ({ userDetails }) => {
                             type="number"
                             id="passingYear"
                             placeholder="Passing Year"
-                            value={""}
+                            value={alumniData.passingYear}
                             onChange={handleChange}
                           />
                         </Col>
                       </Row>
+                      <Row form>
                       <Button
                         variant="contained"
                         sx={{ fontSize: "12px" }}
                         onClick={submitted}
                       >
-                        Request
+                        {status}
                       </Button>
+                      </Row>
+                      
                     </Form>
                   </Col>
                 </Row>

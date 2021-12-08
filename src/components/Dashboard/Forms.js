@@ -55,6 +55,11 @@ export const Forms = () => {
     else if ((event.target.id) === 'address') {
       console.log(event.target.value)
       setUser({ ...user, address: event.target.value });
+    }else if(event.target.id === 'facebook'){
+      // setUser({...user.socialmedia,...{
+      //   facebook:event.target.value
+      // }})
+      console.log(user)
     }
 
   };
@@ -197,7 +202,7 @@ export const Forms = () => {
                     type="date"
                     id="dob"
                     placeholder="Date Of Birth"
-                    value={user.dob}
+                    value={user.dob.split('T')[0]}
                     onChange={handleChange}
                     
                   />
@@ -225,7 +230,7 @@ export const Forms = () => {
                     id="address"
                     placeholder="Address"
                     value={user.address}
-                    onChange={() => {}}
+                    onChange={handleChange}
                     
                   />
                 </Col>
@@ -234,30 +239,32 @@ export const Forms = () => {
               <Row form>
                 {/* City */}
                 <Col md="4" className="form-group">
-                  <label htmlFor="feCity">LinkedIn</label>
+                  <label htmlFor="linkedin">LinkedIn</label>
                   <FormInput
-                    id="feCity"
+                    id="linkedin"
                     placeholder="LinkedIn"
-                    onChange={() => {}}
+                    value={user.socialmedia.linkedin}
+                    onChange={handleChange}
                   />
                 </Col>
                 {/* State */}
                 <Col md="4" className="form-group">
-                  <label htmlFor="feInputState">Facebook</label>
+                  <label htmlFor="facebook">Facebook</label>
                   <FormInput
-                    id="feCity"
+                    id="facebook"
                     placeholder="Facebook"
-                    onChange={() => {}}
+                    value={user.socialmedia.facebook}
+                    onChange={handleChange}
                   />
                 </Col>
                 {/* Zip Code */}
                 <Col md="4" className="form-group">
-                  <label htmlFor="feZipCode">Instagram</label>
+                  <label htmlFor="instagram">Instagram</label>
                   <FormInput
-                    id="feCity"
+                    id="instagram"
                     placeholder="Instagram"
-                    
-                    onChange={() => {}}
+                    value={user.socialmedia.instagram}
+                    onChange={handleChange}
                   />
                 </Col>
               </Row>
