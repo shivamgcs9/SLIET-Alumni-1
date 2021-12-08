@@ -60,6 +60,8 @@ export const Forms = () => {
       //   facebook:event.target.value
       // }})
       console.log(user)
+    }else if(event.target.id == 'phoneNumber'){
+      setUser({ ...user, phoneNumber: event.target.value });
     }
 
   };

@@ -38,47 +38,47 @@ const UserDetails = ({ userDetails }) => {
   };
 
   const handleChange = (event) => {
-    switch(event.target.id){
+    switch (event.target.id) {
       case 'companyName':
-        setAlumniData({...alumniData,companyName:event.target.value})
+        setAlumniData({ ...alumniData, companyName: event.target.value })
         break;
       case 'companyAddress':
-        setAlumniData({...alumniData,companyAddress:event.target.value})
+        setAlumniData({ ...alumniData, companyAddress: event.target.value })
         break;
       case 'companyEmail':
-        setAlumniData({...alumniData,companyEmail:event.target.value})
+        setAlumniData({ ...alumniData, companyEmail: event.target.value })
         break;
       case 'country':
-        setAlumniData({...alumniData,country:event.target.value})
+        setAlumniData({ ...alumniData, country: event.target.value })
         break;
       case 'designation':
-        setAlumniData({...alumniData,designation:event.target.value})
+        setAlumniData({ ...alumniData, designation: event.target.value })
         break;
       case 'yearOfExp':
-        setAlumniData({...alumniData,yearofExp:event.target.value})
+        setAlumniData({ ...alumniData, yearofExp: event.target.value })
         break;
       case 'batch':
-        setAlumniData({...alumniData,batch:event.target.value})
+        setAlumniData({ ...alumniData, batch: event.target.value })
         break;
       case 'branchOfStudy':
-        setAlumniData({...alumniData,branchOfStudy:event.target.value})
+        setAlumniData({ ...alumniData, branchOfStudy: event.target.value })
         break;
       case 'city':
-        setAlumniData({...alumniData,city:event.target.value})
+        setAlumniData({ ...alumniData, city: event.target.value })
         break;
       case 'state':
-        setAlumniData({...alumniData,state:event.target.value})
+        setAlumniData({ ...alumniData, state: event.target.value })
         break;
       case 'regNo':
-        setAlumniData({...alumniData,regNo:event.target.value})
+        setAlumniData({ ...alumniData, regNo: event.target.value })
         break;
       case 'passingYear':
-        setAlumniData({...alumniData,passingYear:event.target.value})
+        setAlumniData({ ...alumniData, passingYear: event.target.value })
         break;
     }
   };
 
-  const [alumniData,setAlumniData] = useState({
+  const [alumniData, setAlumniData] = useState({
     batch: '',
     branchOfStudy: "",
     city: "",
@@ -86,7 +86,7 @@ const UserDetails = ({ userDetails }) => {
     companyEmail: "",
     companyName: "",
     country: "",
-    designation: "",
+    designation: "Designation",
     passingYear: '',
     regNo: "",
     state: "",
@@ -94,31 +94,32 @@ const UserDetails = ({ userDetails }) => {
     yearOfExp: "",
   });
 
-  const [status,setStatus]=useState('Request Alumni')
+  const [status, setStatus] = useState('Request Alumni')
+  const [userName, setUserName] = useState('')
 
-  const requestAlumni=()=>{
-    setOpen(true)
+  // const requestAlumni = () => {
+  //   setOpen(true)
 
-    fetch(`${API}/get-profile`,{
-      method:'GET',
-      headers:{
-        authorization:
-        `bearer ${isAuthenticated()}`,
-        "Content-Type": "application/json",
-      }
-    })
-    .then((data)=>data.json())
-    .then((result)=>{
-      if(result.alumniId)
-      {
-        setAlumniData(result.alumniId)
-        setStatus('Update Alumni Data')
-      }
-      else{
-        setStatus('RequestAlumni')
-      }
-    })
-  }
+  //   fetch(`${API}/get-profile`, {
+  //     method: 'GET',
+  //     headers: {
+  //       authorization:
+  //         `bearer ${isAuthenticated()}`,
+  //       "Content-Type": "application/json",
+  //     }
+  //   })
+  //     .then((data) => data.json())
+  //     .then((result) => {
+  //       if (result.alumniId) {
+  //         setAlumniData(result.alumniId)
+  //         setStatus('Update Alumni Data')
+
+  //       }
+  //       else {
+  //         setStatus('RequestAlumni')
+  //       }
+  //     })
+  // }
   useEffect(() => {
 
     fetch(`${API}/get-profile`, {
@@ -131,23 +132,28 @@ const UserDetails = ({ userDetails }) => {
     })
       .then((data) => data.json())
       .then((result) => {
-        if(result.alumniId){
+        if (result.alumniId) {
           setStatus('Update Alumni Data')
-        }  
+          setAlumniData(result.alumniId)
+        }
+        setUserName(result.name)
       });
   }, []);
 
   const updateProfile = () => {
-
-    fetch(`${API}/alumni-update`, {
+    let endPoint = "/alumni-update";
+    if(!alumniData._id){
+      endPoint = "/request-alumni"
+    }
+    fetch(`${API}${endPoint}`, {
       method: 'POST',
       headers: {
         authorization:
           `bearer ${isAuthenticated()}`,
         "Content-Type": "application/json",
       },
-      body:JSON.stringify({
-       companyName: alumniData.companyName,
+      body: JSON.stringify({
+        companyName: alumniData.companyName,
         companyAddress: alumniData.companyAddress,
         companyEmail: alumniData.companyEmail,
         designation: alumniData.designation,
@@ -159,48 +165,15 @@ const UserDetails = ({ userDetails }) => {
         branchOfStudy: alumniData.branchOfStudy,
         batch: alumniData.batch,
         passingYear: alumniData.passingYear,
-        
+
       })
     }).then(response => {
       response.json()
-    }).then(data=>{console.log(data)})
-    .catch(err => {
-      console.log(err);
-    });
+    }).then(data => { console.log(data) })
+      .catch(err => {
+        console.log(err);
+      });
   }
-
-  // const updateProfile = () => {
-  //   console.log(API)
-  //   fetch(`${API}/get-profile`, {
-  //     method: "GET",
-  //     headers: {
-  //       authorization:
-  //         `bearer ${isAuthenticated}`,
-  //       "Content-Type": "application/json",
-  //     },
-      // body: JSON.stringify({
-      //   companyName: alumniData.companyName,
-      //   companyAddress: alumniData.companyAddress,
-      //   companyEmail: alumniData.companyEmail,
-      //   designation: alumniData.designation,
-      //   yearOfExp: alumniData.yearOfExp,
-      //   city: alumniData.city,
-      //   state: alumniData.state,
-      //   country: alumniData.country,
-      //   regNo: alumniData.regNo,
-      //   branchOfStudy: alumniData.branchOfStudy,
-      //   batch: alumniData.batch,
-      //   passingYear: alumniData.passingYear,
-      // }),
-  //   })
-  //     .then((response) => {
-  //       console.log(response.json);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
   const submitted = () => {
     console.log("submiteed");
     updateProfile();
@@ -220,24 +193,24 @@ const UserDetails = ({ userDetails }) => {
             className="rounded-circle"
             style={{ borderRadius: "50%", objectFit: "cover" }}
             src={userDetails.avatar}
-            alt={userDetails.name}
+            alt={alumniData.name}
             width="160"
             height="160"
           />
         </div>
         <h4 className="mb-0" style={{ fontSize: "22px" }}>
-          {userDetails.name}
+          {userName}
         </h4>
         <span
           className="text-muted d-block mb-2"
           style={{ fontSize: "14px", fontWeight: "bold" }}
         >
-          {userDetails.jobTitle}
+          {alumniData.designation}
         </span>
         <br />
         <Button
           variant="outlined"
-          onClick={requestAlumni}
+          onClick={() => setOpen(true)}
           sx={{ fontSize: "10px", mt: 2 }}
         >
           {status}
@@ -399,15 +372,15 @@ const UserDetails = ({ userDetails }) => {
                         </Col>
                       </Row>
                       <Row form>
-                      <Button
-                        variant="contained"
-                        sx={{ fontSize: "12px" }}
-                        onClick={submitted}
-                      >
-                        {status}
-                      </Button>
+                        <Button
+                          variant="contained"
+                          sx={{ fontSize: "12px" }}
+                          onClick={submitted}
+                        >
+                          {status}
+                        </Button>
                       </Row>
-                      
+
                     </Form>
                   </Col>
                 </Row>
@@ -437,9 +410,9 @@ UserDetails.propTypes = {
 
 UserDetails.defaultProps = {
   userDetails: {
-    name: "Sierra Brooks",
+    // name: alumniData.name,
     avatar: avatar,
-    jobTitle: "Project Manager",
+    // jobTitle: alumniData.designation ? alumniData.designation : "User Profile!!",
     performanceReportTitle: "Workload",
     performanceReportValue: 74,
     metaTitle: "Description",
