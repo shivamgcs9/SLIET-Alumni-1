@@ -140,21 +140,21 @@ const Filters = () => {
         <FilterItem className="filterItem">
           <Select name="" id="" onChange={handleFilters}>
             <Option defaultValue>Passing Year</Option>
-            <Option value="">2018</Option>
-            <Option value="">2019</Option>
-            <Option value="">2020</Option>
-            <Option value="">2021</Option>
-            <Option value="">2022</Option>
+            <Option value="2018">2018</Option>
+            <Option value="2019">2019</Option>
+            <Option value="2020">2020</Option>
+            <Option value="2021">2021</Option>
+            <Option value="2022">2022</Option>
           </Select>
         </FilterItem>
         <FilterItem>
           <Select name="" id="" onChange={handleFilters}>
             <Option defaultValue>Location</Option>
-            <Option value="">Uttrakhand</Option>
-            <Option value="">Punjab</Option>
-            <Option value="">Himachal</Option>
-            <Option value="">Delhi</Option>
-            <Option value="">Shimla</Option>
+            <Option value="Uttrakhand">Uttrakhand</Option>
+            <Option value="Punjab">Punjab</Option>
+            <Option value="Himachal">Himachal</Option>
+            <Option value="Delhi">Delhi</Option>
+            <Option value="Shimla">Shimla</Option>
           </Select>
         </FilterItem>
         <Button onClick={() => setOpen(!open)}>Apply</Button>
