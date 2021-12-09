@@ -141,10 +141,31 @@ const UserDetails = ({ userDetails }) => {
   }, []);
 
   const updateProfile = () => {
-    let endPoint = "/alumni-update";
-    if(!alumniData._id){
-      endPoint = "/request-alumni"
+    let endPoint = "/request-alumni";
+    let payload = {
+      companyName: alumniData.companyName,
+      companyAddress: alumniData.companyAddress,
+      companyEmail: alumniData.companyEmail,
+      designation: alumniData.designation,
+      yearOfExp: alumniData.yearOfExp,
+      city: alumniData.city,
+      state: alumniData.state,
+      country: alumniData.country,
+      regNo: alumniData.regNo,
+      branchOfStudy: alumniData.branchOfStudy,
+      batch: alumniData.batch,
+      passingYear: alumniData.passingYear,
     }
+    if (alumniData._id) {
+      endPoint = "/alumni-update"
+      payload = {
+        ...payload, ...{
+          userId: alumniData.userId
+        }
+      }
+      console.log(alumniData.userId);
+    }
+
     fetch(`${API}${endPoint}`, {
       method: 'POST',
       headers: {
@@ -152,21 +173,8 @@ const UserDetails = ({ userDetails }) => {
           `bearer ${isAuthenticated()}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        companyName: alumniData.companyName,
-        companyAddress: alumniData.companyAddress,
-        companyEmail: alumniData.companyEmail,
-        designation: alumniData.designation,
-        yearOfExp: alumniData.yearOfExp,
-        city: alumniData.city,
-        state: alumniData.state,
-        country: alumniData.country,
-        regNo: alumniData.regNo,
-        branchOfStudy: alumniData.branchOfStudy,
-        batch: alumniData.batch,
-        passingYear: alumniData.passingYear,
-
-      })
+      // Data 
+      body: JSON.stringify(payload)
     }).then(response => {
       response.json()
     }).then(data => { console.log(data) })
