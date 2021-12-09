@@ -14,6 +14,13 @@ import { blue } from "@mui/material/colors";
 import "@fontsource/roboto/300.css";
 import { Divider } from "@mui/material";
 
+export const signout = (next) => {
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("jwt");
+}
+}
+
+
 export const mainListItems = (
   <div>
     <ListItem button>
@@ -68,7 +75,12 @@ export const secondaryListItems = (
       <ListItemIcon>
         <ContactPageIcon sx={{ fontSize: "35px", color: blue[500] }} />
       </ListItemIcon>
-      <ListItemText primary={<NavLink to="#">Sign Out</NavLink>} />
+      <ListItemText primary={<NavLink
+       to="/"
+       onClick={() => {
+                    signout();
+                  }}
+       >Sign Out</NavLink>} />
     </ListItem>
   </div>
 );
