@@ -13,6 +13,7 @@ import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import { blue } from "@mui/material/colors";
 import "@fontsource/roboto/300.css";
 import { Divider } from "@mui/material";
+import LockIcon from '@mui/icons-material/Lock';
 
 export const signout = (next) => {
   if (typeof window !== "undefined") {
@@ -27,25 +28,25 @@ export const mainListItems = (
       <ListItemIcon>
         <DashboardIcon sx={{ fontSize: "35px", color: blue[500] }} />
       </ListItemIcon>
-      <ListItemText  primary={<NavLink to="/dashboard">Dashboard</NavLink>}  />
+      <ListItemText  primary={<NavLink style={{fontSize: '15px'}} to="/dashboard">Dashboard</NavLink>}  />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <InfoIcon sx={{ fontSize: "35px", color: blue[500] }} />
       </ListItemIcon>
-      <ListItemText primary={<NavLink to="#">Profile Information</NavLink>}  />
+      <ListItemText primary={<NavLink style={{fontSize: '15px'}} to="#">Profile Information</NavLink>}  />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <SchoolIcon sx={{ fontSize: "35px", color: blue[500] }} />
       </ListItemIcon>
-      <ListItemText primary={<NavLink to="#">Academics</NavLink>}  />
+      <ListItemText primary={<NavLink style={{fontSize: '15px'}} to="#">Academics</NavLink>}  />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <AccountCircleIcon sx={{ fontSize: "35px", color: blue[500] }} />
       </ListItemIcon>
-      <ListItemText primary={<NavLink to="#">Career</NavLink>} />
+      <ListItemText primary={<NavLink style={{fontSize: '15px'}} to="#">Career</NavLink>} />
     </ListItem>
   </div>
 );
@@ -57,26 +58,27 @@ export const secondaryListItems = (
       <ListItemIcon>
         <HomeIcon sx={{ fontSize: "35px", color: blue[500] }} />
       </ListItemIcon>
-      <ListItemText primary={<NavLink exact to="/">Home</NavLink>}  />
+      <ListItemText primary={<NavLink style={{fontSize: '15px'}} exact to="/">Home</NavLink>}  />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <VpnKeyIcon sx={{ fontSize: "35px", color: blue[500] }} />
       </ListItemIcon>
-      <ListItemText primary={<NavLink to="#">Password Change</NavLink>}  />
+      <ListItemText primary={<NavLink style={{fontSize: '15px'}} to="#">Password Change</NavLink>}  />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <ContactPageIcon sx={{ fontSize: "35px", color: blue[500] }} />
       </ListItemIcon>
-      <ListItemText primary={<NavLink  to="#">Contact Us</NavLink>} />
+      <ListItemText primary={<NavLink style={{fontSize: '15px'}} to="#">Contact Us</NavLink>} />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <ContactPageIcon sx={{ fontSize: "35px", color: blue[500] }} />
+        <LockIcon sx={{ fontSize: "35px", color: blue[500] }} />
       </ListItemIcon>
       <ListItemText primary={<NavLink
        to="/"
+       style={{fontSize: '15px'}}
        onClick={() => {
                     signout();
                   }}
