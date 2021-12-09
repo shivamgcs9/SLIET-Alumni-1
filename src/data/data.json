@@ -7,15 +7,12 @@
     "paragraph": "We focus on faculty, as opposed to facilities, budgets, endowments or students. We do so because We believe, based on many decades of work as a teacher, a scholar and an administrator, that the quality of the faculty determines the quality of the university. Everything else flows from the quality of the faculty. If the faculty are good, you will attract good students and you will have alumni who will raise funds for you.",
     "Why": [
       "SLIET has a lively alumni association",
-      "We truly believe SLIET experience",
-      "SLIET alumni contribute time",
-      "The SLIET aims to learning."
+      "We truly believe SLIET experience"
+     
     ],
     "Why2": [
-      "Aliquip ex ea commodo",
-      "Lorem ipsum dolor",
-      "Exercitation ullamco",
-      "Lorem ipsum dolor"
+      "SLIET alumni contribute time",
+      "The SLIET aims to learning."
     ]
   },
   "Gallery": [
@@ -99,46 +96,51 @@
   ],
   "Testimonials": [
     {
-      "img": "img/testimonials/01.jpg",
-      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
-      "name": "John Doe"
+      "img": "img/testimonials/ruchika.jpg",
+      "text": "\"Educating yourself does not mean you were stupid in the first place, it means that you are intelligent enough to know that there is plenty left to learn.\"",
+      "name": "Ruchika"
     },
     {
-      "img": "img/testimonials/02.jpg",
-      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
-      "name": "Johnathan Doe"
+      "img": "img/testimonials/harsimran.jpg",
+      "text": "\"A college degree is not a sign of a finished product but an indication a person is prepared for life.\"",
+      "name": "Harsimran Singh"
     },
     {
       "img": "img/testimonials/03.jpg",
-      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
-      "name": "John Doe"
+      "text": "\"Months are different in college, especially freshman year. Too much happens. Every freshman month equals six regular months, they’re like dog months.\"",
+      "name": "Ridham Goel"
     },
     {
       "img": "img/testimonials/04.jpg",
-      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
-      "name": "Johnathan Doe"
+      "text": "\"The function of education is to teach one to think intensively and to think critically. Intelligence plus character –– that is the goal of true education.\"",
+      "name": "Shivam"
     },
     {
       "img": "img/testimonials/05.jpg",
-      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
-      "name": "John Doe"
+      "text": "\"College is the best time of your life. When else are your parents going to spend several thousand dollars a year just for you to go to a strange town and get drunk every night?\"",
+      "name": "Jagdeep Singh"
     },
     {
       "img": "img/testimonials/06.jpg",
-      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
-      "name": "Johnathan Doe"
+      "text": "\"Every year, many, many stupid people graduate from college. And if they can do it, so can you.\"",
+      "name": "Prabhjot"
     }
   ],
   "Team": [
+    {
+      "img": "img/team/chairman.jpg",
+      "name": "Dr. K.Radhakrishnan",
+      "job": "Chairman"
+    },
     {
       "img": "img/team/director.jpg",
       "name": "Dr. Shailendra Jain",
       "job": "Director"
     },
     {
-      "img": "img/team/chairman.jpg",
-      "name": "Dr. K.Radhakrishnan",
-      "job": "Chairman"
+      "img": "img/team/rajesh.jpg",
+      "name": "Prof. Rajesh Kumar",
+      "job": "Dean(Student Welfare)"
     },
     {
       "img": "img/team/academics.jpg",
@@ -151,9 +153,19 @@
       "job": "Dean(Faculty & Staff Welfare)"
     },
     {
-      "img": "http://tnp.sliet.ac.in/files/2021/09/download.jpg",
-      "name": "Dr. Ravindra K. Saxena",
-      "job": "Head, Training and Placement "
+      "img": "img/team/harish.jpg",
+      "name": "Prof. Harish Kumar Chopra",
+      "job": "Registrar"
+    },
+    {
+      "img": "img/team/sukhcharan.jpg",
+      "name": "Dr. Sukhcharn Singh",
+      "job": "Alumni Head"
+    },
+    {
+      "img": "img/team/jagdeep.jpg",
+      "name": "Mr. Jagdeep Singh",
+      "job": "Assistant Professor"
     }
   ],
   "Contact": {
