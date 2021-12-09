@@ -160,10 +160,10 @@ const UserDetails = ({ userDetails }) => {
       endPoint = "/alumni-update"
       payload = {
         ...payload, ...{
-          userId: alumniData.userId
+          userId: alumniData.userId,
+          _id: alumniData._id
         }
       }
-      console.log(alumniData.userId);
     }
 
     fetch(`${API}${endPoint}`, {
