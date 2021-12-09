@@ -1,4 +1,5 @@
 import * as React from "react";
+import { NavLink} from 'react-router-dom'
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -19,25 +20,25 @@ export const mainListItems = (
       <ListItemIcon>
         <DashboardIcon sx={{ fontSize: "35px", color: blue[500] }} />
       </ListItemIcon>
-      <ListItemText primary="Dashboard" />
+      <ListItemText  primary={<NavLink to="/dashboard">Dashboard</NavLink>}  />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <InfoIcon sx={{ fontSize: "35px", color: blue[500] }} />
       </ListItemIcon>
-      <ListItemText primary="Profile Information" />
+      <ListItemText primary={<NavLink to="#">Profile Information</NavLink>}  />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <SchoolIcon sx={{ fontSize: "35px", color: blue[500] }} />
       </ListItemIcon>
-      <ListItemText primary="Academics" />
+      <ListItemText primary={<NavLink to="#">Academics</NavLink>}  />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <AccountCircleIcon sx={{ fontSize: "35px", color: blue[500] }} />
       </ListItemIcon>
-      <ListItemText primary="Career" />
+      <ListItemText primary={<NavLink to="#">Career</NavLink>} />
     </ListItem>
   </div>
 );
@@ -49,19 +50,25 @@ export const secondaryListItems = (
       <ListItemIcon>
         <HomeIcon sx={{ fontSize: "35px", color: blue[500] }} />
       </ListItemIcon>
-      <ListItemText primary="Home" />
+      <ListItemText primary={<NavLink exact to="/">Home</NavLink>}  />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <VpnKeyIcon sx={{ fontSize: "35px", color: blue[500] }} />
       </ListItemIcon>
-      <ListItemText primary="Password Change" />
+      <ListItemText primary={<NavLink to="#">Password Change</NavLink>}  />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <ContactPageIcon sx={{ fontSize: "35px", color: blue[500] }} />
       </ListItemIcon>
-      <ListItemText primary="Contact Us" />
+      <ListItemText primary={<NavLink  to="#">Contact Us</NavLink>} />
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <ContactPageIcon sx={{ fontSize: "35px", color: blue[500] }} />
+      </ListItemIcon>
+      <ListItemText primary={<NavLink to="#">Sign Out</NavLink>} />
     </ListItem>
   </div>
 );

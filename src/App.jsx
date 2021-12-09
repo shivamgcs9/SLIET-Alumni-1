@@ -34,13 +34,6 @@ const App = () => {
       <Testimonials data={landingPageData.Testimonials} />
       <Team data={landingPageData.Team} />
       <Contact data={landingPageData.Contact} />
-
-      {/* <Router>
-      <Switch>
-        <Route path='/teams' component={Teams} />
-      </Switch>
-    </Router>
-       */}
     </div>
   );
 };
